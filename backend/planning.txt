@@ -1,0 +1,15 @@
+Emergency Application.
+WHAT??
+A functionality where user can give request ambulance in emergency to thrie doorstep at earliest.
+
+Models?
+Routes?
+
+Emergency App functionality.
+1. User Signin/signup
+2. Automaticaally fetches the user geolocation using browers.
+3. user can see the list of nearest hospital.
+4. user can send the request to hospital on one tap once user confirms their location.
+5. Admin dashboard[for hospital staff] , list incoming request, tap to accept, see real time location.
+6. User can rate to any hospital.
+7. hospital page shows the list of ambulance available along with drivers name, contact info of their.
