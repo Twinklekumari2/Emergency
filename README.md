@@ -1,46 +1,46 @@
-🚑 Emergency – Real-time Ambulance & Hospital Coordination App
+🚑 Emergency – Real-time Ambulance & Hospital Coordination App<br> <br>
 
-Emergency is a MERN-based web application that connects users to the nearest hospitals during critical situations.
-It allows users to send ambulance requests instantly, share live locations, and enables hospitals to accept and manage those requests efficiently.
+Emergency is a MERN-based web application that connects users to the nearest hospitals during critical situations.<br>
+It allows users to send ambulance requests instantly, share live locations, and enables hospitals to accept and manage those requests efficiently.<br>
 
-💡 A quick-response emergency app that brings help closer — when every second counts.
+A quick-response emergency app that brings help closer — when every second counts.<br>
 
-🧠 Tech Stack
+Tech Stack<br>
+Frontend<br>
+React.js (Vite) – UI development <br>
+Zustand – lightweight global state management <br>
+Axios – for API communication <br>
+Tailwind CSS – clean, responsive styling <br>
+React Router – for route management <br>
 
-🌐 Frontend
-React.js (Vite) – UI development
-Zustand – lightweight global state management
-Axios – for API communication
-Tailwind CSS – clean, responsive styling
-React Router – for route management
+Backend<br><br>
+Node.js & Express.js – RESTful API <br>
+MongoDB with Mongoose – database & schema modeling <br>
+JWT Authentication – secure login system <br><br>
 
-⚙️ Backend
-Node.js & Express.js – RESTful API
-MongoDB with Mongoose – database & schema modeling
-JWT Authentication – secure login system
+Features <br><br>
+For Users<br>
+Sign up and login securely using JWT authentication.<br>
+Share real-time location automatically or manually.<br>
+View nearby hospitals dynamically based on location.<br>
+Send emergency ambulance requests to selected hospitals.<br>
+Rate hospitals after receiving service.<br><br>
 
-🧩 Features
-👩‍⚕️ For Users
-✅ Sign up / Login securely with JWT
-📍 Share real-time location automatically or manually
-🏥 View nearby hospitals dynamically
-🚑 Send emergency ambulance request to selected hospitals
-⭐ Rate hospitals after service
-🏥 For Hospitals
-📨 Receive ambulance requests from nearby users
-🟢 Accept or 🔴 Complete requests
-🧾 Manage hospital details and ambulance information
+For Hospitals<br><br>
+Receive ambulance requests from nearby users.<br>
+Accept or complete user requests.<br>
+Manage hospital details and ambulance information.<br><br>
 
-🔗 API Endpoints Overview
-Role	Method	Endpoint	Description
-User	POST	/signup	Register new user
-User	POST	/login	User login
-User	PUT	/user/location	Update or save user’s current location
-User	GET	/hospitals/nearby	Fetch nearby hospitals
-User	GET	/hospital/:id	Get details of a specific hospital
-User	POST	/ratings	Rate a hospital
-Patient	POST	/patient/request	Send ambulance request
-Hospital	PATCH	/request/:id/accept	Accept a user request
-Hospital	PATCH	/request/:id/complete	Mark request as completed
-Hospital	POST	/hospital	Register hospital
-Hospital	POST	/ambulance	Add ambulance details
+API Endpoints Overview<br><br>
+Role	Method	Endpoint	Description<br>
+User	POST	/signup	Register new user<br>
+User	POST	/login	User login<br>
+User	PUT	/user/location	Update or save user’s current location<br>
+User	GET	/hospitals/nearby	Fetch nearby hospitals<br>
+User	GET	/hospital/:id	Get details of a specific hospital<br>
+User	POST	/ratings	Rate a hospital<br>
+Patient	POST	/patient/request	Send ambulance request<br>
+Hospital	PATCH	/request/:id/accept	Accept a user request<br>
+Hospital	PATCH	/request/:id/complete	Mark a request as completed<br>
+Hospital	POST	/hospital	Register a hospital<br>
+Hospital	POST	/ambulance	Add ambulance details<br>
