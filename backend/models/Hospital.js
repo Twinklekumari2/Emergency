@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Ambulance = require('./Ambulance.js')
 
 const hospitalSchema = new mongoose.Schema({
     name:{
@@ -18,6 +17,10 @@ const hospitalSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
+    city:{
+        type:String,
+        required:true,
+    },
     location:{
         lat:{
             type:Number,
@@ -30,7 +33,7 @@ const hospitalSchema = new mongoose.Schema({
     },
     ambulance:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:Ambulance
+        ref:"Ambulance"
     }
 })
 

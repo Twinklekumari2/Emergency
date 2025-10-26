@@ -1,15 +1,13 @@
 const mongoose = require('mongoose');
-const User = require('./User');
-const Hospital = require('./Hospital');
 
 const requestSchema = new mongoose.Schema({
     userId:{
         type: mongoose.Schema.Types.ObjectId,
-        ref:User
+        ref:"User"
     },
     hospitalId:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:Hospital,
+        ref: "Hospital"
     },
     location:{
         lat:{
@@ -38,3 +36,7 @@ const requestSchema = new mongoose.Schema({
         default:Date.now
     }
 })
+
+
+const Request = mongoose.model('request', requestSchema);
+module.exports = Request;
