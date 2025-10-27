@@ -4,9 +4,26 @@ const Ambulance = require('./../models/Ambulance')
 const {jwtAuthMiddleWare, generateToken} = require('./../jwt');
 const Hospital = require('../models/Hospital');
 const Request = require('../models/Request');
+const User = require('../models/User');
+
+const checkHospitalRole = async (userId) => {
+    try{
+        const user = await User.findById(userId);
+        // console.log(user.role);
+        return user.role === 'hospital';
+    }
+    catch(err){
+        console.log(err);
+        return false;
+    }
+}
+
 
 router.post('/ambulance',jwtAuthMiddleWare, async (req, res) => {
     try{
+        
+        if(! await checkHospitalRole(req.user.id))
+            return res.status(403).json({message:"user has not hospital role"});
 
         const ambulance = req.body;
         // const userId = req.user.id;
@@ -26,6 +43,8 @@ router.post('/ambulance',jwtAuthMiddleWare, async (req, res) => {
 
 router.post('/hospitals',jwtAuthMiddleWare, async (req, res) => {
     try{
+        if(! await checkHospitalRole(req.user.id))
+            return res.status(403).json({message:"user has not hospital role"});
 
         const hospital = req.body;
         // const userId = req.user.id;
@@ -45,6 +64,8 @@ router.post('/hospitals',jwtAuthMiddleWare, async (req, res) => {
 
 router.patch('/request/:requestId/accept',jwtAuthMiddleWare, async (req,res) => {
     try{
+        if(! await checkHospitalRole(req.user.id))
+            return res.status(403).json({message:"user has not hospital role"});
         
         const requestId = req.params.requestId;
         const hospitalId = req.user.id; //here user if hospital.
@@ -70,6 +91,8 @@ router.patch('/request/:requestId/accept',jwtAuthMiddleWare, async (req,res) => 
 
 router.patch('/request/:requestId/completed',jwtAuthMiddleWare, async (req,res) => {
     try{
+        if(! await checkHospitalRole(req.user.id))
+            return res.status(403).json({message:"user has not hospital role"});
         
         const requestId = req.params.requestId;
         const hospitalId = req.user.id;
