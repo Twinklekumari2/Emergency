@@ -62,6 +62,24 @@ router.post('/hospitals',jwtAuthMiddleWare, async (req, res) => {
     }
 })
 
+router.get('/hospitals', jwtAuthMiddleWare, async(req, res) => {
+    try{
+        const { icu } = req.query;
+        let filter = {};
+        if(icu == "true"){
+            filter.icuAvailable = true;
+        }
+
+        const hospitals = await Hospital.find(filter);
+        res.status(200).json({response: hospitals, message: "Successfully filtered"})
+    }catch(err){
+        console.log(err);
+        res.status(501).json({error: err});
+
+    }
+
+})
+
 router.patch('/request/:requestId/accept',jwtAuthMiddleWare, async (req,res) => {
     try{
         if(! await checkHospitalRole(req.user.id))

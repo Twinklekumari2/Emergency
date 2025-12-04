@@ -1,0 +1,50 @@
+import React, { useState } from 'react'
+import "./../styles/Navbar.css"
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faList } from '@fortawesome/free-solid-svg-icons'
+// import { set } from 'mongoose';
+
+
+const Navbar = () => {
+    const navigate = useNavigate();
+    const [openMenu, setOpenMenu] = useState(false);
+    
+    function handleClick(){
+        setOpenMenu(!openMenu);
+        
+    }
+  return (
+    <div className='container'>
+        {/* ----------- LEFT SIDE ----------- */}
+        <div className='left-side'>
+            <h1>EMER<span>G</span>ENCY</h1>
+        </div>
+        {/* ----------- MIDDLE ----------- */}
+        <div className={`middle ${openMenu ? "showMenu" : ""} `}>
+            <h3 onClick={() => navigate('/')}>Home</h3>
+            <h3 onClick={() => navigate('/near-by')}>NearBy</h3>
+            <h3 onClick={() => navigate('/ambulance')}>Ambulance</h3>
+            <h3 onClick={() => navigate('/about')}>About</h3>
+        </div>
+
+        {/* ----------- RIGHT SIDE ----------- */}
+        <div className='right-side'>
+            <div className='button'>Location</div>
+
+            {/* --------- HAMBURGER ----------- */}
+        <div className='hamburger'>
+            <div className='icon-hamburger' onClick={handleClick}>
+               <FontAwesomeIcon icon={faList} size="2xl" style={{ color: "#f50000" }} />
+            </div>
+        </div>
+ 
+        </div>
+
+        
+
+    </div>
+  )
+}
+
+export default Navbar

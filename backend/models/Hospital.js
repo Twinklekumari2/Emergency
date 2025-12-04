@@ -34,6 +34,30 @@ const hospitalSchema = new mongoose.Schema({
     ambulance:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Ambulance"
+    },
+    icuAvailable:{
+        type:Boolean,
+        required: true,
+        default: false,
+    },
+    ventilators:{
+        type:Number,
+        required:true,
+        default:0,
+    },
+    ermergencyServices:{
+        type:Boolean,
+        required:true,
+        default: true,
+    },
+    bedsAvailabe:{
+        type:Boolean,
+        required:true,
+        default: 0,
+    },
+    lastUpdated:{
+        type:Date,
+        default: Date.now,
     }
 })
 
