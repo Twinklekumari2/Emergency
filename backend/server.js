@@ -2,6 +2,13 @@ const express = require('express')
 const app = express();
 const db = require('./db');
 require('dotenv').config();
+const cors = require('cors'); 
+
+app.use(cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}));
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -19,6 +26,8 @@ app.use('/general', generalRoutes);
 const patientRoutes = require('./routes/patientRoutes.js');
 app.use('/patient', patientRoutes);
 
+const locationRoutes = require('./routes/locationRoutes.js');
+app.use('/location', locationRoutes)
 
 app.listen(PORT, () => {
     console.log('Server is running on port', PORT)

@@ -41,7 +41,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(to right,#252525,#dd2828);
+    background: linear-gradient(to right,black,red);
     padding: 10px 20px;
     font-size: 1rem;
     font-weight: 700;

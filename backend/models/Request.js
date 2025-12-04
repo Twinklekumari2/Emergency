@@ -18,6 +18,7 @@ const requestSchema = new mongoose.Schema({
         }
     },
     status:{
+        type:String,
         enum:['pending', 'accepted', 'completed'],
         required:true,
     },

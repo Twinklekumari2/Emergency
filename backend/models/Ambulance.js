@@ -14,6 +14,7 @@ const ambulanceSchema = new mongoose.Schema({
         required:true,
     },
     status:{
+        type:String,
         enum:['available','busy'],
         required:true,
     }
