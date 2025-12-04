@@ -11,13 +11,13 @@ const userRoutes = require('./routes/userRoutes.js');
 app.use('/user', userRoutes);
 
 const hospitalRoutes = require('./routes/hospitalRoutes.js');
-app.use('/user', hospitalRoutes);
+app.use('/hospital', hospitalRoutes);
 
 const generalRoutes = require('./routes/generalRoutes.js');
 app.use('/general', generalRoutes);
 
 const patientRoutes = require('./routes/patientRoutes.js');
-app.use('/user', patientRoutes);
+app.use('/patient', patientRoutes);
 
 
 app.listen(PORT, () => {

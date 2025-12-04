@@ -1,0 +1,108 @@
+.container{
+    width: 100%;
+    height: 10vh;
+    background-color: black;
+    color: #ffffff;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 5px 20px;
+}
+
+/* LEFT SIDE */
+.left-side h1 span{
+    color:red;
+    font-size: 2.5rem;
+}
+
+/* MIDDLE MENU (Desktop) */
+.middle{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 0 10px;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.middle h3, .button{
+    cursor: pointer;
+}
+
+/* RIGHT SIDE */
+.right-side {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.right-side .button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right,#252525,#dd2828);
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 8px;
+}
+
+/* HAMBURGER ICON */
+.hamburger{
+    display: none;
+    cursor: pointer;
+}
+
+/* ------------------- MOBILE ------------------- */
+@media only screen and (max-width: 768px){
+    
+    .middle{
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 11vh;
+        right: 0;
+        gap: 0;
+        /* background: white; */
+        color: wheat;
+        /* padding: 15px; */
+        border-radius: 0 0 10px 10px;
+        width: 20%;
+        box-shadow: 0 0 20px rgba(166, 17, 17, 0.3);
+        z-index: 10;
+        font-size: 0.8rem;
+    }
+
+
+    /* ACTIVE MENU CLASS */
+    .middle.showMenu {
+        display: flex;
+    }
+
+    .hamburger{
+        display: block;
+    }
+}
+
+@media only screen and (min-width : 768px) and (max-width:1000px){
+    .middle{
+        font-size: 0.6rem;
+    }
+}
+
+/* ------------------- SMALL MOBILE ------------------- */
+@media only screen and (max-width: 480px){
+    .left-side{
+        font-size: 0.6rem;
+    }
+
+    .left-side h1 span{
+        font-size: 1.4rem;
+    }
+
+    .right-side .button{
+        padding: 8px 15px;
+        font-size: 0.8rem;
+    }
+}
