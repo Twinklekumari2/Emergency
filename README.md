@@ -8,7 +8,6 @@ A quick-response emergency app that brings help closer — when every second cou
 Tech Stack<br>
 Frontend<br>
 React.js (Vite) – UI development <br>
-Zustand – lightweight global state management <br>
 Axios – for API communication <br>
 Tailwind CSS – clean, responsive styling <br>
 React Router – for route management <br>
