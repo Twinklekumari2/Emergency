@@ -3,7 +3,7 @@ import "./../styles/Navbar.css"
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faList } from '@fortawesome/free-solid-svg-icons'
-// import { set } from 'mongoose';
+import getUserLocation from './../script/location.js'
 
 
 const Navbar = () => {
@@ -12,7 +12,6 @@ const Navbar = () => {
     
     function handleClick(){
         setOpenMenu(!openMenu);
-        
     }
   return (
     <div className='container'>
@@ -30,7 +29,7 @@ const Navbar = () => {
 
         {/* ----------- RIGHT SIDE ----------- */}
         <div className='right-side'>
-            <div className='button'>Location</div>
+            <div className='button' onClick={getUserLocation}>Location</div>
 
             {/* --------- HAMBURGER ----------- */}
         <div className='hamburger'>
