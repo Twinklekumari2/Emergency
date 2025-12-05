@@ -16,6 +16,10 @@
     font-size: 1rem;
     font-weight: 600;
     font-family: poppins;
+    border-left: 2px solid red;
+    border-radius: 5px;
+    box-shadow: 0 8px 10px -5px rgba(255, 0, 0, 0.4);
+    padding: 0 0 0 1rem;
 }
 .mission-left-side p , .mission-left-side ul{
     font-size: 1.2rem;
@@ -34,4 +38,17 @@
     /* border: 2px solid red; */
     padding: 1rem 3rem;
     background: linear-gradient(135deg, red, black);
+}
+
+@media only screen and (max-width:600px){
+    .mission{
+        flex-direction: column-reverse;
+        width: 100%;
+    }
+    .mission-right-side{
+        flex-direction: row;
+    }
+    .mission-left-side{
+        width: 100%;
+    }
 }

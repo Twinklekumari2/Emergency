@@ -29,4 +29,10 @@
      font-size: 5rem;
 }
 
+@media only screen and (max-width: 500px){
+    .about{
+        font-size: 2rem;
+        padding: 1rem;
+    }
+}
 

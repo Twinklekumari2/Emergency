@@ -7,7 +7,7 @@ const About = () => {
         <h1> 
           <span className='about-1'>India’s First Instant - </span><br /> 
           <span className='about-2'>Emergency & Ambulance </span> <br /> 
-          <span className='about-3'>Help Website</span>
+          <span className='about-3'>Help Platform</span>
         </h1>
     </div>
   )
