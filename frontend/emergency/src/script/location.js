@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 async function getAddressFromCoords(lat, lon) {
     try {
         const response = await fetch(
@@ -35,6 +37,19 @@ export default async function getUserLocation() {
             console.log("Longitude:", longitude);
 
             const address = await getAddressFromCoords(latitude, longitude);
+
+            toast.success("Location Successfully Fetched",{
+                position:"top-right",
+                style: {
+    background: "linear-gradient(135deg, red, black)",
+    color: "#fff",
+    borderRadius: "10px",
+    padding: "14px",
+    fontSize: "16px",
+    fontFamily: "Poppins",
+    fontWeight: "700"
+  }
+            })
 
 
 //             alert(`Your Location\nLat: ${latitude}\nLong: ${longitude}`);
