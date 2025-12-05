@@ -1,13 +1,15 @@
 .container{
-    width: 100%;
+    width: 97%;
     height: 10vh;
     background-color: black;
     color: #ffffff;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
     display: flex;
     align-items: center;
     justify-content: space-around;
     padding: 5px 20px;
+    position: fixed;
+    top: 5px;
+    z-index: 9;
 }
 
 /* LEFT SIDE */
@@ -22,7 +24,7 @@
     align-items: center;
     gap: 2rem;
     padding: 0 10px;
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 700;
 }
 
@@ -43,7 +45,7 @@
     align-items: center;
     background: linear-gradient(to right,black,red);
     padding: 10px 20px;
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 700;
     border-radius: 8px;
 }
