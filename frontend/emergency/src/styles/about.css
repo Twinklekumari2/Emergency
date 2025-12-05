@@ -1,0 +1,32 @@
+.about {
+    padding: 0 5rem 2rem 5rem;
+    text-align: left;
+    font-family: poppins;
+}
+
+.about h1 {
+    /* line-height: 4rem; */
+    font-weight: 900;
+}
+
+.about-1,
+.about-2,
+.about-3 {
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+
+.about-1{
+     font-size: 5rem;
+}
+.about-2 {
+    font-size: 6rem;
+    color: red;
+    font-weight: 900;
+    font-style: italic;
+}
+.about-3{
+     font-size: 5rem;
+}
+
+
