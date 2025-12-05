@@ -102,3 +102,15 @@
         line-height: normal;
     }
 }
+
+@media only screen and (max-width:800px){
+    .hero-section{
+        flex-direction: column;
+    }
+}
+@media only screen and (min-width:800px) and (max-width:1007px){
+    .lhs-heading{
+        font-size: 1rem;
+        line-height: normal;
+    }
+}

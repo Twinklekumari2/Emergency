@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import "./../styles/Navbar.css"
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faList } from '@fortawesome/free-solid-svg-icons'
 import getUserLocation from './../script/location.js'
@@ -8,6 +8,7 @@ import getUserLocation from './../script/location.js'
 
 const Navbar = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const [openMenu, setOpenMenu] = useState(false);
     
     function handleClick(){
@@ -21,10 +22,19 @@ const Navbar = () => {
         </div>
         {/* ----------- MIDDLE ----------- */}
         <div className={`middle ${openMenu ? "showMenu" : ""} `}>
-            <h3 onClick={() => navigate('/')}>Home</h3>
-            <h3 onClick={() => navigate('/near-by')}>NearBy</h3>
-            <h3 onClick={() => navigate('/ambulance')}>Ambulance</h3>
-            <h3 onClick={() => navigate('/about')}>About</h3>
+            <h3  
+            className={location.pathname === "/" ? "active" : ""} 
+            onClick={() => navigate('/')}>Home</h3>
+            <h3 
+            className={location.pathname === "/near-by" ? "active" : ""} 
+            onClick={() => navigate('/near-by')}>NearBy</h3>
+
+            <h3
+             className={location.pathname === "/ambulance" ? "active" : ""}  
+             onClick={() => navigate('/ambulance')}>Ambulance</h3>
+            <h3 
+            className={location.pathname === "/about" ? "active" : ""} 
+            onClick={() => navigate('/about')}>About</h3>
         </div>
 
         {/* ----------- RIGHT SIDE ----------- */}

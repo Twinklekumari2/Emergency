@@ -30,7 +30,7 @@ const HeroSection = () => {
                     <div className='button btn' onClick={getUserLocation}>Location</div>
                 </div>
                 <div>
-                    <div className='button' onClick={handleSOS}>SOS</div>
+                    <div className='button' onClick={handleSOS}>SOS EMERGENCY</div>
                 </div>
             </div>
 

@@ -32,6 +32,22 @@
     cursor: pointer;
 }
 
+.middle h3 {
+    transition: all 0.5s ease-in-out;
+}
+.middle h3:hover{
+    background-color: red;
+    color: rgb(255, 255, 255);
+    padding: 3px 8px;
+    border-radius: 5px;
+}
+.middle h3.active {
+    background-color: red;
+    color: black;
+    padding: 3px 8px;
+    border-radius: 5px;
+}
+
 /* RIGHT SIDE */
 .right-side {
     display: flex;
@@ -89,7 +105,7 @@
 
 @media only screen and (min-width : 768px) and (max-width:1000px){
     .middle{
-        font-size: 0.6rem;
+        font-size: 0.8rem;
     }
 }
 
