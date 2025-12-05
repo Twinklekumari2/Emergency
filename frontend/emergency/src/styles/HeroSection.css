@@ -97,6 +97,19 @@
 
 
 @media only screen and (max-width : 500px){
+    .hero-section{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left:2rem;
+        padding: 3rem;
+    }
+    .left-hero-section, .right-hero-section{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
     .lhs-heading{
         font-size: 1rem;
         line-height: normal;
