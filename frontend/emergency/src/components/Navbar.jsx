@@ -29,7 +29,7 @@ const Navbar = () => {
 
         {/* ----------- RIGHT SIDE ----------- */}
         <div className='right-side'>
-            <div className='button' onClick={getUserLocation}>Location</div>
+            <div className='button' onClick={getUserLocation}> Fetch My Location</div>
 
             {/* --------- HAMBURGER ----------- */}
         <div className='hamburger'>
