@@ -33,8 +33,8 @@ const Navbar = () => {
              className={location.pathname === "/ambulance" ? "active" : ""}  
              onClick={() => navigate('/ambulance')}>Ambulance</h3>
             <h3 
-            className={location.pathname === "/about" ? "active" : ""} 
-            onClick={() => navigate('/about')}>About</h3>
+            className={location.pathname === "/about-us" ? "active" : ""} 
+            onClick={() => navigate('/about-us')}>About</h3>
         </div>
 
         {/* ----------- RIGHT SIDE ----------- */}
