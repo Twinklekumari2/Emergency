@@ -1,41 +1,53 @@
 const mongoose = require('mongoose');
 
 const requestSchema = new mongoose.Schema({
-    userId:{
+    // hospitalId:{
+    //     type:mongoose.Schema.Types.ObjectId,
+    //     ref: "Hospital"
+    // },
+     // 1️⃣ Patient Information
+    relationshipToPatient: {
+        type: String,
+        required: true
+    },
+    bloodGroup: {
+        type: String,
+        required: true
+    },
+    notes: {
+        type: String,
+        required: true
+    },
+
+    // 2️⃣ Contact Information
+    contactName: {
+        type: String,
+        required: true
+    },
+    contactPhone: {
+        type: String,
+        required: true
+    },
+    contactEmail: {
+        type: String,
+        required: true
+    },
+
+    // 3️⃣ Extra - track which admin submitted
+    submittedBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:"User"
+        ref: "Admin"
     },
-    hospitalId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref: "Hospital"
+
+    createdAt: {
+        type: Date,
+        default: Date.now
     },
-    location:{
-        lat:{
-            type:Number,
-        },
-        lon:{
-            type:Number,
-        }
-    },
-    status:{
-        type:String,
-        enum:['pending', 'accepted', 'completed'],
-        required:true,
-    },
-    driverInfo:{
-        name:{
-            type:String,
-            required:true,
-        },
-        contact:{
-            type:String,
-            required:true,
-        },
-    },
-    createdAt:{
-        type:Date,
-        default:Date.now
-    }
+    status: {
+    type: String,
+    enum: ["Pending", "accepted", "completed"],
+    default: "Pending"
+}
 })
 
 
