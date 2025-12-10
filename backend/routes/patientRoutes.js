@@ -3,13 +3,13 @@ const router = express.Router();
 const Request = require('./../models/Request')
 const {jwtAuthMiddleWare, generateToken} = require('./../jwt');
 
-router.post('/request',jwtAuthMiddleWare, async (req, res) => {
+router.post('/request', async (req, res) => {
     try{
 
         const request = req.body;
-        const userId = req.user.id;
+        // const userId = req.user.id;
         const newRequest = new Request(request);
-        newRequest.userId = userId;
+        // newRequest.userId = userId;
         //have to take hospital id from frontend when user select the sepecific hospital.
         const response = await newRequest.save();
         

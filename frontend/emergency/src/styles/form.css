@@ -1,0 +1,91 @@
+.form{
+    color: white;
+    margin-top: 15vh;
+    /* border:2px solid yellow; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0;
+    width: 100%;
+    
+}
+.form-form{
+    border: 3.8px solid red;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 3rem;
+    border-radius: 15px;
+    gap: 15px;
+    background-color: red;
+    box-shadow: -4px 4px 15px rgba(248, 247, 247);
+}
+.upper-form, .lower-form{
+    border: 1.8px solid red;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: black;
+    /* background: rgba(255, 255, 255, 0.3);  
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px); */
+    border-radius:15px;
+}
+.upper-form-content, .lower-form-content{
+    /* border: 2px solid yellow; */
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    /* align-items: center; */
+    gap: 2rem;
+}
+.form-data{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 16rem;
+    /* justify-content: center;
+    align-items: center; */
+}
+.upper-form-content-1{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.form label{
+    font-size: 1.3rem;
+    font-weight: 800;
+}
+.form input, .form textarea{
+    outline: none;
+    background-color: transparent;
+    border: none;
+    padding: 1rem;
+    border-bottom: 2.5px red solid;
+    border-radius: 5px;
+    color: white;
+    padding-bottom: 0.5rem;
+    font-size: 1rem;
+}
+.form textarea{
+    min-height: 100px;
+    /* border: 2px solid yellow; */
+}
+.submit input{
+    background-color: white;
+    padding: 0.8rem 1.8rem;
+    color: black;
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: poppins;
+}
+.form label span{
+    color:rgb(255, 98, 0);
+}

@@ -28,6 +28,9 @@ const Navbar = () => {
             <h3 
             className={location.pathname === "/near-by" ? "active" : ""} 
             onClick={() => navigate('/near-by')}>NearBy</h3>
+            <h3 
+            className={location.pathname === "/near-by" ? "active" : ""} 
+            onClick={() => navigate('/near-by')}>Hospitals</h3>
 
             <h3
              className={location.pathname === "/ambulance" ? "active" : ""}  

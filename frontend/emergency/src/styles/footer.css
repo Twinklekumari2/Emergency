@@ -9,6 +9,7 @@
     padding: 2rem 0;
     font-weight: 600;
     color: #F1F1F1;
+    margin-bottom: 10px;
 }
 
 .footer-left{
@@ -16,12 +17,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* background-color: red; */
     padding: 2rem 4rem;
 }
-/* .footer-logo{
-    line-height: 1rem;
-} */
 .footer-logo h1{
     color: white;
 }
@@ -47,4 +44,30 @@
 .footer-box li{
     cursor: pointer;
 
+}
+@media only screen and (max-width: 800px){
+    .footer-left{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2rem;
+        padding: 1rem 2rem;
+    }
+
+    .footer-sections{
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1.5rem;
+    }
+    .footer-logo{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .footer{
+        width:100%;
+        padding: 0 5rem;
+        /* margin: 0; */
+    }
 }

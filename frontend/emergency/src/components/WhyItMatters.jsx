@@ -1,5 +1,6 @@
 import React from 'react'
 import './../styles/whyItMatters.css'
+import flowChart from './../assets/flowchart.png'
 
 const WhyItMatters = () => {
   return (
@@ -16,7 +17,7 @@ const WhyItMatters = () => {
             <div>
                 <ul>
                     <li>
-                        <h2>Incident Report: Tragedy at Sardar Vallabhbhai National Institute of Technology (SVNIT) — Ambulance Delay in 2025</h2>
+                        <h2>Tragedy at Sardar Vallabhbhai National Institute of Technology (SVNIT) — 2025</h2>
 <p>On late Sunday night (around 11:15 PM), a 20-year-old third-year B.Tech student, Advait Nair, residing in the Bhabha Boys’ Hostel of SVNIT, allegedly jumped from the second floor of the hostel building. Immediately after the fall, students attempted to get help. They first went to the campus ambulance station — but found it “non-responsive.” They then called an external ambulance, which reportedly took over 30 minutes to arrive. Once taken to hospital (reports mention Sunshine Global Hospital or the civil hospital), the student did not receive timely or effective treatment — students and protesters have alleged delays in treatment, demand for payment before treatment, lack of faculty accompaniment, and general “negligence.” Tragically, the student was declared dead during treatment.</p>
                     </li>
                     <li>
@@ -53,7 +54,7 @@ const WhyItMatters = () => {
                 <h1>How this Emergency Platform Works?</h1>
             </div>
             <div className='func-content'>
-
+                <img src={flowChart} alt="" />
             </div>
 
         </div>

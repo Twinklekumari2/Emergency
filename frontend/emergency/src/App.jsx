@@ -4,6 +4,7 @@ import { Route,Routes,Navigate, useNavigate} from 'react-router-dom'
 import HomePage from './pages/HomePage.jsx'
 import { ToastContainer } from 'react-toastify';
 import About from './pages/About.jsx';
+import Ambulance from './pages/Ambulance.jsx';
 
 const App = () => {
   return (
@@ -16,7 +17,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<HomePage/>}/>
         {/* <Route path='/near-by' element={<NearBy/>}/> */}
-        {/* <Route path='/ambulance' element={<Ambulance/>}/> */}
+        <Route path='/ambulance' element={<Ambulance/>}/>
         <Route path='/about-us' element={<About/>}/> 
       </Routes>
     </div>

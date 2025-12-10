@@ -5,26 +5,26 @@
     /* align-items: center; */
     margin-top: 15vh;
     /* border: 2px solid yellow; */
-    width: 100%;
-    /* padding: 2rem; */
+    width: auto;
+    padding: 1rem 2rem;
     margin-bottom: 3rem;
 }
 .why-left-side{
     font-size: 1.4rem;
-    padding: 0 0 0 3rem;
+    padding: 0 3rem 0 3rem;
     background:linear-gradient(135deg, red, black);
 }
 .why-right-side{
     width: 70%;
     font: 1rem;
-    padding: 0 0 0 3rem;
+    padding: 0 3rem 0 3rem;
 }
 .why-right-side span{
     color: red;
 }
 .why-incidents h1{
     font-size: 2rem;
-    padding: 0 0 0 2rem;
+    padding: 0 2rem 0 2rem;
     font-weight: 700;
     color: red;
 }
@@ -38,17 +38,56 @@
     list-style: none;
 }
 .why-incidents h2{
-    width: max-content;
+    width: fit-content;
     font-size: 1.7rem;
     font-weight: 700;
     border-bottom: 2px solid red;
     padding-bottom: 2px;
     border-radius: 5px;
+    text-wrap: wrap;
+}
+.why-incidents p{
+    width: fit-content;
 }
 .functionality{
-    font-size: 1.4rem;
-    padding: 0 5rem 0 0;
+    
+}
+.func-heading{
     background:linear-gradient(135deg, black, red);
+    font-size: 1.5rem;
+    padding: 1rem 2rem 0 0.5rem;
     text-align: right;
     font-weight: 700;
+}
+.func-content{
+    display: flex;
+    justify-content: left;
+}
+.func-content img {
+    width: 100%;
+    max-width: 1000px;   /* or whatever size you want */
+    height: auto;
+    display: block;
+    margin: 0 auto;     /* centers the image */
+}
+@media only screen and (max-width:650px){
+    .why-incidents p, .why-incidents h2{
+        width: 100%;
+        /* border: 2px solid yellow; */
+    }
+    .why-incidents{
+        /* border: 2px solid yellow; */
+        width: 100%;
+    }
+    .whyItMatters{
+        width: 100%;
+        /* border: 2px solid yellow; */
+        /* margin-left: 17%; */
+        padding: 0 5rem;
+    }
+}
+@media only screen and (max-width:250px){
+    .whyItMatters{
+        padding: 0 1rem;
+    }
 }
