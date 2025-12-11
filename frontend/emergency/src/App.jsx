@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage.jsx'
 import { ToastContainer } from 'react-toastify';
 import About from './pages/About.jsx';
 import Ambulance from './pages/Ambulance.jsx';
+import Hospital from './pages/Hospital.jsx';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
     />
       <Routes>
         <Route path='/' element={<HomePage/>}/>
+        <Route path='/hospital' element={<Hospital/>}/>
         {/* <Route path='/near-by' element={<NearBy/>}/> */}
         <Route path='/ambulance' element={<Ambulance/>}/>
         <Route path='/about-us' element={<About/>}/> 
