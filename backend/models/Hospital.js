@@ -1,65 +1,150 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const bcrypt = require('bcrypt');
 
-const hospitalSchema = new mongoose.Schema({
-    name:{
-        type:String,
-        required:true,
+const hospitalSchema = new mongoose.Schema(
+  {
+    // ============================
+    // BASIC HOSPITAL INFO
+    // ============================
+    hospitalName: {
+      type: String,
+      required: true,
+      trim: true,
     },
-    email:{
-        type:String,
-        required:true,
+
+    registrationNo: {
+      type: String,
+      required: true,
+      unique: true,
     },
-    password:{
-        type:String,
-        required:true,
+
+    hospitalType: {
+      type: String,
+      required: true,
     },
-    address:{
-        type:String,
-        required:true,
+
+    ownership: {
+      type: String,
     },
-    city:{
-        type:String,
-        required:true,
+
+    establishedYear: {
+      type: String,
     },
-    location:{
-        lat:{
-            type:Number,
-            required:true,
-        },
-        lon:{
-            type:Number,
-            required: true,
-        },
+
+    // ============================
+    // ADDRESS
+    // ============================
+    addressLine1: { type: String, required: true },
+    addressLine2: { type: String },
+    city: { type: String, required: true },
+    district: { type: String },
+    pincode: { type: String },
+    state: { type: String },
+
+    // ============================
+    // LOCATION
+    // ============================
+    latitude: { type: Number },
+    longitude: { type: Number },
+
+    // ============================
+    // CONTACT INFO
+    // ============================
+    officialEmail: {
+      type: String,
+      required: true,
+      unique: true,
     },
-    ambulance:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"Ambulance"
+
+    officialPhone: {
+      type: String,
     },
-    icuAvailable:{
-        type:Boolean,
-        required: true,
-        default: false,
+
+    emergencyPhone: {
+      type: String,
     },
-    ventilators:{
-        type:Number,
-        required:true,
-        default:0,
+
+    website: {
+      type: String,
     },
-    ermergencyServices:{
-        type:Boolean,
-        required:true,
-        default: true,
+
+    // ============================
+    // FACILITIES
+    // ============================
+    totalBeds: { type: Number, default: 0 },
+    icuBeds: { type: Number, default: 0 },
+    oxygenBeds: { type: Number, default: 0 },
+    ventilators: { type: Number, default: 0 },
+    ambulanceCount: { type: Number, default: 0 },
+    is24X7: { type: String }, // you used string in state
+    departments: { type: String },
+
+    // ============================
+    // LIVE AVAILABILITY
+    // ============================
+    isAcceptingEmergency: { type: String }, // string in state
+    availableBeds: { type: Number, default: 0 },
+    availableAmbulances: { type: Number, default: 0 },
+
+    lastUpdated: {
+      type: Date,
+      default: Date.now,
     },
-    bedsAvailabe:{
-        type:Boolean,
-        required:true,
-        default: 0,
+
+    // ============================
+    // DOCUMENTS
+    // ============================
+    hospitalLicenseUrl: { type: String },
+    aadhaarOrPanUrl: { type: String },
+    fireSafetyCertificate: { type: String },
+    imageOfHospital: { type: String },
+
+    // ============================
+    // ADMIN INFO
+    // ============================
+    adminName: { type: String },
+    adminRole: { type: String },
+    adminPhone: { type: String },
+    adminEmail: { type: String },
+    adminPassword: { type: String },
+
+    // ============================
+    // VERIFICATION
+    // ============================
+    verificationStatus: {
+      type: String,
+      enum: ["Pending", "Approved", "Rejected"],
+      default: "Pending",
     },
-    lastUpdated:{
-        type:Date,
-        default: Date.now,
+  },
+  { timestamps: true }
+);
+
+hospitalSchema.pre('save', async function(next){
+    const user = this;
+    if(!user.isModified('adminPassword')) return next();
+    try{
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(user.adminPassword, salt);
+        user.adminPassword = hashedPassword;
+        next();
+
+    }catch(err){
+        return next(err);
     }
 })
 
-const Hospital = mongoose.model('hospital', hospitalSchema);
-module.exports = Hospital
+hospitalSchema.methods.comparePassword = async function(candidatePassword){
+    try{
+        const isMatch = await bcrypt.compare(candidatePassword, this.adminPassword)
+        return isMatch;
+        
+
+    }catch(err){
+        throw err;
+
+    }
+
+}
+
+module.exports = mongoose.model("Hospital", hospitalSchema);

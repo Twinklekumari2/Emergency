@@ -41,21 +41,22 @@ router.post('/ambulance',jwtAuthMiddleWare, async (req, res) => {
     }
 })
 
-router.post('/hospitals',jwtAuthMiddleWare, async (req, res) => {
+//signup
+router.post('/hospitals', async (req, res) => {
     try{
-        if(! await checkHospitalRole(req.user.id))
-            return res.status(403).json({message:"user has not hospital role"});
 
         const hospital = req.body;
-        // const userId = req.user.id;
         const newHospital = new Hospital(hospital);
-        // newRating.userID = userId;
-        //hospital id is sent dynamically though frontend. keep it in mind...
         const response = await newHospital.save();
         
         console.log(response);
+        const payload = {
+            id : newHospital._id,
+        }
+        const token = generateToken(payload);
+        console.log("Token is: ", token);
     
-        res.status(200).json({message: "Successfully added Hospital details.", response: response});
+        res.status(200).json({message: "Successfully added Hospital details.",token:token, response: response});
     }catch(err){
         console.log(err);
         res.status(500).json({error: err})
@@ -141,5 +142,50 @@ router.patch('/request/:requestId/completed',jwtAuthMiddleWare, async (req,res) 
 
     }
 })
+
+//hospital login
+router.post('/login', async (req, res) => {
+    try{
+        const {registrationNo, adminPassword} = req.body;
+        console.log("Login attempt:", registrationNo, adminPassword);
+        //finding the given username in the Hospital Model.
+        const user = await Hospital.findOne({registrationNo: registrationNo
+        });
+
+        if(!user || !(await user.comparePassword(adminPassword))){
+           console.log(adminPassword, user)
+           return res.status(401).json({error: 'Invalid username or password'});
+        }
+        const payload = {
+            id : user.id,
+        }
+        const token = generateToken(payload);
+        console.log("Token is: ", token);
+        res.status(200).json({token: token, message:"login successfully"});
+    }catch(err){
+        console.log(err);
+        res.status(500).json({error: "internal server error"});
+
+    }
+})
+
+//accessing a single hospital.
+router.get("/me", jwtAuthMiddleWare, async (req, res) => {
+    try {
+        const hospitalId = req.user.id;  // ID from token
+
+        const hospital = await Hospital.findById(hospitalId);
+
+        if (!hospital) {
+            return res.status(404).json({ message: "Hospital not found" });
+        }
+
+        res.json({ hospital });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
 
 module.exports = router;
