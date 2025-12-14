@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./../styles/content.css";
 import axios from "axios";
+import LoginHospital from "./LoginHospital";
 
 const Content = () => {
   const [formData, setFormData] = useState({
@@ -155,6 +156,8 @@ const Content = () => {
         <h1 className="c-heading">This Section is only for HOSPITAL</h1>
         <h3>"signup/login to add your hospital"</h3>
       </div>
+
+      <LoginHospital/>
 
       <div className="content-upper">
         <form className="form-hospital" onSubmit={handleSubmit}>

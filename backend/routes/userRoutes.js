@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('./../models/User');
 const Rating = require('./../models/Rating')
 const {jwtAuthMiddleWare, generateToken} = require('./../jwt');
+const Hospital = require('../models/Hospital');
 
 router.post('/signup', async (req,res) => {
     try{
@@ -104,6 +105,56 @@ router.post('/rating', async (req, res) => {
     }
 })
 
+router.patch('/approve/:hospitalId',jwtAuthMiddleWare, async (req, res) => {
+    try{
 
+        const userId = req.user.id;
+        const user = await User.findById(userId);
+        if(user.role !== "admin"){
+            return res.status(403).json({message:"Access Denied"});
+        }
+        const { hospitalId } = req.params;
+        const hospital = await Hospital.findById(hospitalId);
+
+        if(!hospital){
+            return res.status(401).json({message: "hospital not found"});
+        }
+
+        hospital.verificationStatus = "Approved";
+        await hospital.save();
+        
+        return res.json(200).json({message: "Approved successfully", response: hospital});
+
+    }catch(err){
+        console.log(err);
+        res.status(501).json({message:"internal server error"});
+    }
+})
+
+router.patch('/reject/:hospitalId',jwtAuthMiddleWare, async (req, res) => {
+    try{
+
+        const userId = req.user.id;
+        const user = await User.findById(userId);
+        if(user.role !== "admin"){
+            return res.status(403).json({message:"Access Denied"});
+        }
+        const { hospitalId } = req.params;
+        const hospital = await Hospital.findById(hospitalId);
+
+        if(!hospital){
+            return res.status(401).json({message: "hospital not found"});
+        }
+
+        hospital.verificationStatus = "Rejected";
+        await hospital.save();
+        
+        return res.json(200).json({message: "Rejected successfully", response: hospital});
+
+    }catch(err){
+        console.log(err);
+        res.status(501).json({message:"internal server error"});
+    }
+})
 
 module.exports = router;

@@ -17,18 +17,9 @@ const userSchema = new mongoose.Schema({
     },
     role:{
         type:String,
-        enum:['user','hospital'],
+        enum:['admin'],
         required:true,
-    },
-    location:{
-        lat:{
-            type:Number,
-        },
-        lon:{
-            type:Number
-        }
-    },
-    
+    }
 })
 
 userSchema.pre('save', async function(next){

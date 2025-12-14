@@ -14,7 +14,7 @@ const Hospital = () => {
 
   useEffect(() => {
     async function checkToken() {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("hospital");
 
       if (!token) {
         setIsLogged(false);
@@ -26,9 +26,11 @@ const Hospital = () => {
           headers: { Authorization: `Bearer ${token}` }
         });
 
-        setHospitalData(res.data.hospital);
+        console.log(res);
+
+        setHospitalData(res.data.response);
         setIsLogged(true);
-        if(res.data.hospital.verificationStatus === "approved"){
+        if(res.data.response.verificationStatus === "Approved"){
           setApproved(true);
         }
       } catch (err) {
@@ -37,7 +39,7 @@ const Hospital = () => {
     }
 
     checkToken();
-  });
+  }, []);
 
   return (
     <div>

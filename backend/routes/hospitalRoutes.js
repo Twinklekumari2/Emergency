@@ -63,6 +63,20 @@ router.post('/hospitals', async (req, res) => {
     }
 })
 
+router.get('/list', jwtAuthMiddleWare, async (req, res) => {
+    try{
+        const hospital = await Hospital.find();
+        if(!hospital){
+            return res.status(404).json({message:"Hospital is not there"});
+        }
+
+        res.status(200).json({message:"hospital successfully fetched", response: hospital})
+
+    }catch(err){
+        res.status(501).json({error:err});
+    }
+})
+
 router.get('/hospitals', jwtAuthMiddleWare, async(req, res) => {
     try{
         const { icu } = req.query;
@@ -180,7 +194,7 @@ router.get("/me", jwtAuthMiddleWare, async (req, res) => {
             return res.status(404).json({ message: "Hospital not found" });
         }
 
-        res.json({ hospital });
+        res.json({response: hospital, message:"Successfully shown the profile" });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
