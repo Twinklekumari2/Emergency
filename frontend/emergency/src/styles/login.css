@@ -1,0 +1,93 @@
+.login{
+    width: 100vw;
+    /* height: 100vh; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 2px solid yellow; */
+    padding: 3rem 0;
+    /* margin-top: 20vh; */
+}
+.login-box{
+    width: 50%;
+    height: 100%;
+    /* border: 2px solid yellow; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.form-login{
+    /* border: 2px solid yellow; */
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.login-heading{
+    font-size: 2rem;
+    font-weight: 800;
+}
+.login-heading span{
+    font-size: 2.5rem;
+    color:red;
+}
+.login-details{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+    /* border: 2px yellow solid; */
+    padding: 0.5rem 2rem;
+}
+.login-details label{
+    font-size: 1.5rem;
+}
+.login button{
+    border: none;
+    background-color: transparent;
+    outline: none;
+    color: white;
+}
+.submit-btn{
+    display: flex;
+    justify-content: center;
+}
+.login-submit{
+    padding: 0.5rem 1.7rem;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: poppins;
+    background: linear-gradient(135deg, red, black);
+}
+.login-login{
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+.login-details input{
+    color: white;
+    background-color: transparent;
+}
+
+@media only screen and (max-width:950px){
+    .form-login{
+        width: 100%;
+    }
+}
+@media only screen and (max-width:600px){
+    .form-login{
+        padding: 0;
+        /* border: 2px yellow solid; */
+    }
+    .login-box{
+        width: 100%;
+        padding: 0;
+        /* border: 2px solid yellow; */
+    }
+    .login{
+        padding: 0;
+        display: flex;
+        justify-content: flex-start;
+        width: 100%;
+    }
+}
