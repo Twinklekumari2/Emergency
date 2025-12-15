@@ -2,4 +2,42 @@
     width: 100%;
     margin-top: 15vh;
     border: 2px yellow solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5rem;
+    padding: 2rem 0rem;
+}
+.profile-left-side{
+    display: flex;
+    flex-direction: column;
+}
+.profile-left-upper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+}
+.profile-left-upper-left{
+    display: flex;
+    flex-direction: column;
+}
+.profile-left-upper-right{
+    line-height: 10px;
+}
+.profile-left-upper-right-name{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 5px;
+}
+.profile-left-upper-right-name a{
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 1066px) {
+    .profile{
+        padding: 2rem 0;;
+    }
+    
 }
