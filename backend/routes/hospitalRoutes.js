@@ -200,6 +200,60 @@ router.get("/me", jwtAuthMiddleWare, async (req, res) => {
     }
 });
 
+//updating the hospital
+router.put('/update/:hospitalId', jwtAuthMiddleWare, async (req, res) => {
+  try {
+    const { hospitalId } = req.params;
+
+    // 1. Check hospital exists
+    const hospital = await Hospital.findById(hospitalId);
+    if (!hospital) {
+      return res.status(404).json({ message: "Hospital not found" });
+    }
+
+    // 2. Ensure logged-in hospital is updating its own profile
+    if (req.user.id !== hospitalId) {
+      return res.status(403).json({ message: "Unauthorized access" });
+    }
+
+    // 3. Allowed fields to update (IMPORTANT)
+    const allowedUpdates = [
+      "hospitalName",
+      "officialEmail",
+      "website",
+      "imageOfHospital",
+      "ambulanceCount",
+      "availableAmbulances",
+      "totalBeds",
+      "icuBeds",
+      "oxygenBeds",
+      "availableBeds",
+      "ventilators"
+    ];
+
+    // 4. Update only allowed fields
+    allowedUpdates.forEach(field => {
+      if (req.body[field] !== undefined) {
+        hospital[field] = req.body[field];
+      }
+    });
+
+    hospital.lastUpdated = new Date();
+
+    // 5. Save changes
+    await hospital.save();
+
+    res.status(200).json({
+      message: "Hospital profile updated successfully",
+      response: hospital
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 
 
 module.exports = router;

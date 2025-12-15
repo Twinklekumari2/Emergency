@@ -39,7 +39,7 @@ const Hospital = () => {
     }
 
     checkToken();
-  }, []);
+  },[]);
 
   return (
     <div>

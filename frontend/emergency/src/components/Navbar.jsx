@@ -43,6 +43,9 @@ const Navbar = () => {
         {/* ----------- RIGHT SIDE ----------- */}
         <div className='right-side'>
             <div className='button' onClick={getUserLocation}> Fetch My Location</div>
+            <h3 
+            className={location.pathname === "/login" ? "active" : ""} 
+            onClick={() => navigate('/login')}>Login[Admin]</h3>
 
             {/* --------- HAMBURGER ----------- */}
         <div className='hamburger'>
