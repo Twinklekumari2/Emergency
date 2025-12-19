@@ -16,6 +16,11 @@ const Profile = ({ data }) => {
     status:"",
   })
 
+  const handleLogout = async () => {
+    localStorage.removeItem("hospital");
+    window.location.href = '/login/hospital'
+  }
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -78,7 +83,7 @@ const Profile = ({ data }) => {
 
           <div className='profile-left-upper-left'>
             <img src={formData.imageOfHospital} alt="hospital" />
-            <p>{formData.hospitalType} {formData.ownership} {formData.establishedYear}</p>
+            <p>{formData.hospitalType}, {formData.ownership}, {formData.establishedYear}</p>
           </div>
 
           <div className='profile-left-upper-right'>
@@ -234,6 +239,11 @@ const Profile = ({ data }) => {
           </>
         ) : (
           <>
+             <div className='logout'>
+              <div className='profile-btns' onClick={handleLogout}>
+                  <button>Logout</button>
+              </div>
+             </div>
             <p>Ambulance: <span className='profile-data'> {formData.ambulanceCount}</span></p>
 
             <p>Available Ambulance: <span className='profile-data'>{formData.availableAmbulances}</span></p>

@@ -8,6 +8,14 @@ import Ambulance from './pages/Ambulance.jsx';
 import Hospital from './pages/Hospital.jsx';
 import Login from './components/Login.jsx'
 import Admin from './components/Admin.jsx';
+import NearBy from './pages/NearBy.jsx';
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faAmbulance } from "@fortawesome/free-solid-svg-icons";
+import LoginHospital from './components/LoginHospital.jsx';
+import AdminProtectedRoute from "./ProtectedRoutes.jsx";
+
+library.add(faAmbulance);
+
 
 const App = () => {
   return (
@@ -20,11 +28,20 @@ const App = () => {
       <Routes>
         <Route path='/' element={<HomePage/>}/>
         <Route path='/hospital' element={<Hospital/>}/>
-        {/* <Route path='/near-by' element={<NearBy/>}/> */}
+        <Route path='/near-by' element={<NearBy/>}/>
         <Route path='/ambulance' element={<Ambulance/>}/>
         <Route path='/about-us' element={<About/>}/> 
         <Route path='/login' element={<Login/>}/>
-        <Route path='/admin' element={<Admin/>}/>
+        <Route path='/login/hospital' element={<LoginHospital/>}/>
+
+        <Route
+  path="/admin"
+  element={
+    <AdminProtectedRoute>
+      <Admin />
+    </AdminProtectedRoute>
+  }
+/>
       </Routes>
     </div>
   )

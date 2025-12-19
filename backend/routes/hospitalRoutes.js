@@ -282,6 +282,17 @@ router.put('/update/:hospitalId', jwtAuthMiddleWare, async (req, res) => {
   }
 });
 
+router.post('/logout', async (req, res) => {
+      res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,       // true in production
+    sameSite: "strict",
+  });
+    res.status(200).json({
+    message: "Logout successful",
+    });
+})
+
 
 
 module.exports = router;

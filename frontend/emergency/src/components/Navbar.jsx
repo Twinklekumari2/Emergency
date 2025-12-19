@@ -42,10 +42,23 @@ const Navbar = () => {
 
         {/* ----------- RIGHT SIDE ----------- */}
         <div className='right-side'>
-            <div className='button' onClick={getUserLocation}> Fetch My Location</div>
             <h3 
-            className={location.pathname === "/login" ? "active" : ""} 
-            onClick={() => navigate('/login')}>Login[Admin]</h3>
+            className={location.pathname === "/login/hospital" ? "active" : ""} 
+            onClick={() => navigate('/login/hospital')}>Login[Hospital]</h3>
+            <h3
+  onClick={() => {
+    if (location.pathname === "/admin") {
+      // LOGOUT
+      localStorage.removeItem("admin");
+      navigate("/login"); // or /admin/login
+    } else {
+      // LOGIN
+      navigate("/login");
+    }
+  }}
+>
+  {location.pathname === "/admin" ? "Logout" : "Login [Admin]"}
+</h3>
 
             {/* --------- HAMBURGER ----------- */}
         <div className='hamburger'>

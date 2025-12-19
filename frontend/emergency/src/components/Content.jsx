@@ -157,8 +157,6 @@ const Content = () => {
         <h3>"signup/login to add your hospital"</h3>
       </div>
 
-      <LoginHospital/>
-
       <div className="content-upper">
         <form className="form-hospital" onSubmit={handleSubmit}>
           {/* BASIC DETAILS */}
