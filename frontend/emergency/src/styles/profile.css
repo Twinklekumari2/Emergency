@@ -1,28 +1,32 @@
 .profile{
-    width: 100%;
     margin-top: 15vh;
-    border: 2px yellow solid;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
     gap: 5rem;
-    padding: 2rem 0rem;
+    padding: 2rem 2rem;
 }
 .profile-left-side{
     display: flex;
     flex-direction: column;
 }
 .profile-left-upper{
+    /* border: 2px yellow solid; */
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     gap: 3rem;
 }
 .profile-left-upper-left{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.profile-left-upper-left img{
+    border-radius: 50%;
 }
 .profile-left-upper-right{
+    /* border: 2px yellow solid; */
     line-height: 10px;
 }
 .profile-left-upper-right-name{
@@ -32,9 +36,38 @@
     padding-right: 5px;
 }
 .profile-left-upper-right-name a{
+    /* border: 2px yellow solid; */
     cursor: pointer;
 }
 
+.profile-btns{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+.profile-btns button{
+    background: linear-gradient(to right, black, red);
+    padding: 0.5rem 1rem;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.logout{
+    display: flex;
+    justify-content: end;
+    align-items: start;
+}
+
+.profile-data{
+    color: red;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
 @media only screen and (max-width: 1066px) {
     .profile{
         padding: 2rem 0;;

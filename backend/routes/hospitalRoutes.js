@@ -6,26 +6,17 @@ const Hospital = require('../models/Hospital');
 const Request = require('../models/Request');
 const User = require('../models/User');
 
-const checkHospitalRole = async (userId) => {
+//add ambulance driver details
+router.post('/ambulance/:hospitalId',jwtAuthMiddleWare, async (req, res) => {
     try{
-        const user = await User.findById(userId);
-        // console.log(user.role);
-        return user.role === 'hospital';
-    }
-    catch(err){
-        console.log(err);
-        return false;
-    }
-}
 
+        const {hospitalId} = req.params;
+        const hospital = await Hospital.findById(hospitalId);
+        if(!hospital){
+            return res.status(404).json({message:"Hospital not found"});
+        }
 
-router.post('/ambulance',jwtAuthMiddleWare, async (req, res) => {
-    try{
-        
-        if(! await checkHospitalRole(req.user.id))
-            return res.status(403).json({message:"user has not hospital role"});
-
-        const ambulance = req.body;
+        const ambulance = req.body; //data that is sent by frontend
         // const userId = req.user.id;
         const newAmbulance = new Ambulance(ambulance);
         // newRating.userID = userId;
@@ -40,6 +31,45 @@ router.post('/ambulance',jwtAuthMiddleWare, async (req, res) => {
         res.status(500).json({error: err})
     }
 })
+
+router.get('/ambulance', jwtAuthMiddleWare, async (req, res) => {
+    try{
+        const ambulance = await Ambulance.find();
+        if(!ambulance){
+            return res.status(404).json({message:"Hospital is not present"});
+        }
+
+        res.status(200).json({message:"ambulance successfully fetched", response: ambulance})
+
+    }catch(err){
+        res.status(501).json({error:err});
+    }
+})
+
+
+router.put('/ambulance/:id', jwtAuthMiddleWare, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const ambulance = await Ambulance.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    if (!ambulance) {
+      return res.status(404).json({ message: "Ambulance not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      response: ambulance
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
 
 //signup
 router.post('/hospitals', async (req, res) => {
@@ -67,7 +97,7 @@ router.get('/list', jwtAuthMiddleWare, async (req, res) => {
     try{
         const hospital = await Hospital.find();
         if(!hospital){
-            return res.status(404).json({message:"Hospital is not there"});
+            return res.status(404).json({message:"Hospital is not present"});
         }
 
         res.status(200).json({message:"hospital successfully fetched", response: hospital})
@@ -231,7 +261,6 @@ router.put('/update/:hospitalId', jwtAuthMiddleWare, async (req, res) => {
       "ventilators"
     ];
 
-    // 4. Update only allowed fields
     allowedUpdates.forEach(field => {
       if (req.body[field] !== undefined) {
         hospital[field] = req.body[field];
@@ -240,7 +269,6 @@ router.put('/update/:hospitalId', jwtAuthMiddleWare, async (req, res) => {
 
     hospital.lastUpdated = new Date();
 
-    // 5. Save changes
     await hospital.save();
 
     res.status(200).json({
@@ -253,6 +281,17 @@ router.put('/update/:hospitalId', jwtAuthMiddleWare, async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+router.post('/logout', async (req, res) => {
+      res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,       // true in production
+    sameSite: "strict",
+  });
+    res.status(200).json({
+    message: "Logout successful",
+    });
+})
 
 
 

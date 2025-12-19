@@ -1,3 +1,39 @@
-.login-hospital input{
-    color: white;
+.login-hospital{
+    /* border: 2px solid red; */
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin-top: 20vh; */
+    padding: 6rem 0;
+}
+.container-login-hospital{
+    /* border: 2px solid red; */
+    /* height: 80%; */
+    width: 28%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.container-login-hospital form{
+    width: 100%;
+}
+.labelwithinput{
+    width: 100%;
+    /* border: 2px solid red; */
+    /* height: 80%; */
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+.labelwithinput label{
+    font-size: 1.5rem;
+}
+.signupoption{
+    color: red;
+    font-size: 1.1rem;
+    margin-left: 5px;
+    cursor: pointer;
 }

@@ -1,0 +1,85 @@
+.card{
+    border: 2px solid rgb(255, 255, 255);
+    padding: 1rem;
+    box-shadow: 3px 4px 5px white;
+    border-radius: 10px;
+    max-width: 400px;
+}
+.card-hospital-info{
+    display: flex;
+    line-height: 3px;
+    /* border: 2px solid rosybrown; */
+    gap: 1rem;
+}
+.active-status{
+    width: 15px;
+    height: 15px;
+    background: rgb(35, 225, 35);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    padding:3px;
+}
+.busy-status{
+    width: 15px;
+    height: 15px;
+    background: rgb(255, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    padding:3px;    
+}
+.card-img-part{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    /* border: 1px solid red; */
+}
+.card-hospital-available{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /* border: 2px solid red; */
+    /* width: 20%; */
+    gap: 0.7rem;
+}
+.hospital-name{
+    position: absolute;
+    bottom: 0px;
+    font-size: 1.2rem;
+    /* border: 2px solid red; */
+    background-color: black;
+    color: white;
+}
+.card-hospital-beds{
+    width:max-content;
+    /* border: 2px solid red; */
+}
+.card-hospital-contact{
+    width:max-content;
+    /* border: 2px solid red; */
+}
+.card-hospital-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card-hospital-button button {
+    outline: none;
+    border: 1px solid white;
+    background-color: transparent;
+    color: white;
+    border-radius: 10px;
+    padding: 0.2rem 2rem;
+    cursor: pointer;
+    transition: all 200ms ease-in;
+}
+
+.card-hospital-button button:hover {
+    background-color: white;
+    color: black;
+}

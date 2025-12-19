@@ -2,8 +2,11 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import './../styles/loginHospital.css'
+import Image from './../assets/india22.png'
+import { useNavigate } from 'react-router-dom'
 
 const LoginHospital = () => {
+  const navigate = useNavigate()
     const [formData, setFormData] = useState({
         registrationNo : "",
         adminPassword : "",
@@ -25,6 +28,7 @@ const LoginHospital = () => {
             localStorage.setItem("hospital", token)
             console.log(res);
             toast.success("Login Succesffully");
+            window.location.href = '/hospital'
 
          }catch(err){
             console.log(err);
@@ -32,9 +36,15 @@ const LoginHospital = () => {
     }
   return (
     <div className='login-hospital'>
-        <h1>Login</h1>
+      <div>
+        <img src={Image} alt="" />
+      </div>
+      <div className='container-login-hospital'>
+         <h1 className="login-heading">EMER<span>G</span>ENCY</h1>
+         <br />
+         <br />
         <form onSubmit={handleSubmit}>
-          <div>
+          <div className='labelwithinput'>
             <label htmlFor="regno">Registration Number</label>
             <input 
             type="text"
@@ -45,7 +55,7 @@ const LoginHospital = () => {
             onChange={handleChange}
             />
           </div>
-          <div>
+          <div className='labelwithinput'>
             <label htmlFor="password">Password</label>
             <input 
             type="password"
@@ -56,8 +66,20 @@ const LoginHospital = () => {
             onChange={handleChange}
             />
           </div>
-          <input type="submit"/>
+          <div className='profile-btns'>
+            <button>Submit</button>
+          </div>
         </form>
+        <p>Do not have account?
+           <span 
+           className='signupoption' 
+           onClick={() => navigate('/hospital')}
+        >
+           Create Here
+          </span>
+        </p>
+      </div>
+        
     </div>
   )
 }

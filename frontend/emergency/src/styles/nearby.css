@@ -1,0 +1,34 @@
+.near-by{
+    margin-top: 15vh;
+    /* border: 2px solid chartreuse; */
+    min-height: 80vh;
+}
+.near-by-loc{
+    margin-top: 15vh;
+    /* border: 2px solid chartreuse; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+.location-buttons{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    border: 2px sandybrown solid;
+}
+.hospital-page{
+    border: 2px solid white;
+}
+.hospital-list {
+    border: 2px solid white;
+    overflow-x: scroll;
+
+    /* Firefox */
+    scrollbar-width: none;
+
+    /* IE & Edge */
+    -ms-overflow-style: none;
+}
