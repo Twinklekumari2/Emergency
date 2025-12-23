@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
+import './../styles/driverDetail.css'
 
 const DriverDetails = ({ hospitalId }) => {
 
@@ -63,10 +64,11 @@ const DriverDetails = ({ hospitalId }) => {
   return (
     <div>
       <h1>Driver Details</h1>
+      <div className='driver'>
       {details
   .filter(detail => detail.hospitalId === hospitalId)
   .map(detail => (
-    <div key={detail._id}>
+    <div key={detail._id} className='driver-detail'>
       <p><b>Driver Name:</b> {detail.driverName}</p>
       <p><b>Contact:</b> {detail.contact}</p>
 
@@ -76,23 +78,25 @@ const DriverDetails = ({ hospitalId }) => {
             value={statusValue}
             onChange={(e) => setStatusValue(e.target.value)}
           >
-            <option value="available">Available</option>
+            <option value="available" >Available</option>
             <option value="busy">Busy</option>
           </select>
 
-          <button onClick={() => handleUpdate(detail._id)}>Save</button>
-          <button onClick={() => setEditingId(null)}>Cancel</button>
+          <button onClick={() => handleUpdate(detail._id)} className='driver-button'>Save</button>
+          <button onClick={() => setEditingId(null)} className='driver-button'>Cancel</button>
         </>
       ) : (
         <>
           <p><b>Status:</b> {detail.status}</p>
-          <button onClick={() => handleEdit(detail._id, detail.status)}>
+          <button onClick={() => handleEdit(detail._id, detail.status)} className='driver-button'>
             Edit Status
           </button>
         </>
       )}
     </div>
-))}
+        
+      ))}
+      </div>
 
     </div>
   );

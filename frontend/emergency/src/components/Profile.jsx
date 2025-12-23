@@ -4,66 +4,53 @@ import axios from 'axios'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe, faPen } from "@fortawesome/free-solid-svg-icons";
 import DriverDetails from './DriverDetails';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = ({ data }) => {
-
+  const navigate = useNavigate()
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({ ...data });
-  const [ambulanceData, setAmbulanceData] = useState({
-    hospitalId:`${data._id}`,
-    driverName:"",
-    contact:"",
-    status:"",
-  })
 
-  const handleLogout = async () => {
+  const [ambulanceData, setAmbulanceData] = useState({
+    hospitalId: data._id,
+    driverName: "",
+    contact: "",
+    status: "",
+  });
+
+  const handleLogout = () => {
     localStorage.removeItem("hospital");
-    window.location.href = '/login/hospital'
-  }
+    window.location.href = '/login/hospital';
+  };
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleChangeAmbulance = (e) => {
-    setAmbulanceData({
-      ...ambulanceData,
-      [e.target.name] : e.target.value
-    });
-  }
-  const handleSubmit = async () => {
-    // later you can call API here
+    setAmbulanceData({ ...ambulanceData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const token = localStorage.getItem("hospital");
-    const url = `http://localhost:4000/hospital/ambulance/${data._id}`;
-    const res = await axios.post(
-      url,
+
+    await axios.post(
+      `http://localhost:4000/hospital/ambulance/${data._id}`,
       ambulanceData,
-      {
-        headers:{
-          Authorization : `Bearer ${token}`
-        }
-      }
-    )
-    console.log("Updated Data:", res.data.response);
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
   };
 
   const handleSave = async () => {
-    // later you can call API here
     const token = localStorage.getItem("hospital");
-    const url = `http://localhost:4000/hospital/update/${formData._id}`;
-    const res = await axios.put(
-      url,
+
+    await axios.put(
+      `http://localhost:4000/hospital/update/${formData._id}`,
       formData,
-      {
-        headers:{
-          Authorization : `Bearer ${token}`
-        }
-      }
-    )
-    console.log("Updated Data:", res.data.response);
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
     setEditMode(false);
   };
 
@@ -75,10 +62,10 @@ const Profile = ({ data }) => {
   return (
     <div className='profile'>
 
-      {/* -------- LEFT SIDE -------- */}
+      {/* ================= LEFT SIDE ================= */}
       <div className='profile-left-side'>
 
-        {/* -------- UPPER -------- */}
+        {/* ---- Hospital Card ---- */}
         <div className='profile-left-upper'>
 
           <div className='profile-left-upper-left'>
@@ -87,34 +74,29 @@ const Profile = ({ data }) => {
           </div>
 
           <div className='profile-left-upper-right'>
-
-            {/* ---- Hospital Identity + Edit Button ---- */}
             <div className='profile-left-upper-right-name'>
               <h2>{formData.registrationNo}</h2>
 
               <a href={formData.website} target="_blank" rel="noreferrer">
-                <FontAwesomeIcon icon={faGlobe} style={{ color: "white" }} />
+                <FontAwesomeIcon icon={faGlobe} />
               </a>
 
               <button className="edit-btn" onClick={() => setEditMode(true)}>
-                <FontAwesomeIcon icon={faPen} /> Edit Profile
+                <FontAwesomeIcon icon={faPen} /> Edit
               </button>
             </div>
 
-            {/* ---- Editable Fields ---- */}
             {editMode ? (
               <>
-                <label htmlFor="hospitalName">Hospital Name</label>
+                <label>Hospital Name</label>
                 <input
-                  type="text"
                   name="hospitalName"
                   value={formData.hospitalName}
                   onChange={handleChange}
                 />
 
-                <label htmlFor="officialEmail">E-mail</label>
+                <label>Email</label>
                 <input
-                  type="email"
                   name="officialEmail"
                   value={formData.officialEmail}
                   onChange={handleChange}
@@ -123,15 +105,18 @@ const Profile = ({ data }) => {
             ) : (
               <>
                 <h2>{formData.hospitalName}</h2>
-                <h2>{formData.officialEmail}</h2>
+                <p>{formData.officialEmail}</p>
+
+                <div className='request' onClick={() => navigate('/requests')}>
+                  Requests
+                </div>
               </>
             )}
-
           </div>
         </div>
 
-        {/* -------- ADMIN DETAILS -------- */}
-        <div>
+        {/* ---- Admin Info ---- */}
+        <div className="profile-card">
           <h1>Admin Details</h1>
           <p>Name: {formData.adminName}</p>
           <p>Role: {formData.adminRole}</p>
@@ -139,129 +124,83 @@ const Profile = ({ data }) => {
         </div>
 
         <DriverDetails hospitalId={data._id} />
-
       </div>
 
-      {/* --------- MIDDLE SIDE -------------- */}
+      {/* ================= MIDDLE SIDE ================= */}
+      <div className="profile-middle-side">
+        <h1>Add Ambulance</h1>
 
-      <div>
-        <h1>Add Ambulance Details</h1>
-        <div>
-          <form onSubmit={handleSubmit}>
-          <div>
-          <label htmlFor="driverName">Driver Name</label>
-          <input type="text" 
-          name="driverName" 
-          id="driverName" 
-          value={ambulanceData.driverName}
-          onChange={handleChangeAmbulance}
-          />
-          </div>
+        <form onSubmit={handleSubmit}>
+          <label>Driver Name</label>
+          <input name="driverName" onChange={handleChangeAmbulance} />
 
-          <div>
-            <label htmlFor="contact">Contact</label>
-            <input type="text" 
-            name="contact" 
-            id="contact" 
-            value={ambulanceData.contact}
-            onChange={handleChangeAmbulance}
-            />
-          </div>
-          <div>
-            <label htmlFor="status">Status</label>
-            <select name="status"
-             id="status"
-             value={ambulanceData.status}
-             onChange={handleChangeAmbulance}
-             >
-              <option value="">Select</option>
-              <option value="available">Available</option>
-              <option value="busy">Busy</option>
-             </select>
-          </div>
+          <label>Contact</label>
+          <input name="contact" onChange={handleChangeAmbulance} />
+
+          <label>Status</label>
+          <select name="status" onChange={handleChangeAmbulance}>
+            <option value="">Select</option>
+            <option value="available">Available</option>
+            <option value="busy">Busy</option>
+          </select>
 
           <div className='profile-btns'>
-            <button>SUBMIT</button>
+            <button type="submit">Add</button>
           </div>
-          </form>
-          
-          
-        </div>
-
+        </form>
       </div>
 
-      {/* -------- RIGHT SIDE -------- */}
-      <div>
+      {/* ================= RIGHT SIDE ================= */}
+      <div className="profile-right-side">
 
         {editMode ? (
           <>
-            <div>
-              <label htmlFor="ambulanceCount">Ambulance Count</label>
-            <input name="ambulanceCount" id='ambulanceCount' value={formData.ambulanceCount} onChange={handleChange} />
-            </div>
-            
+            <label>Total Ambulance</label>
+            <input name="ambulanceCount" value={formData.ambulanceCount} onChange={handleChange} />
 
-            <div>
-              <label htmlFor="availableAmbulances">Available Ambulances</label>
-            <input name="availableAmbulances" id='availableAmbulances' value={formData.availableAmbulances} onChange={handleChange} />
-            </div>
+            <label>Available Ambulances</label>
+            <input name="availableAmbulances" value={formData.availableAmbulances} onChange={handleChange} />
 
-            <div>
-              <label htmlFor="totalBeds">Total Beds</label>
-            <input name="totalBeds" id='totalBeds' value={formData.totalBeds} onChange={handleChange} />
-            </div>
+            <label>Total Beds</label>
+            <input name="totalBeds" value={formData.totalBeds} onChange={handleChange} />
 
-            <div>
-              <label htmlFor="icuBeds">ICU Beds</label>
-            <input name="icuBeds" id='icuBeds' value={formData.icuBeds} onChange={handleChange} />
-            </div>
+            <label>ICU Beds</label>
+            <input name="icuBeds" value={formData.icuBeds} onChange={handleChange} />
 
-            <div>
-              <label htmlFor="oxygenBeds">Oxygen Beds</label>
-            <input name="oxygenBeds" id='oxygenBeds' value={formData.oxygenBeds} onChange={handleChange} />
-            </div>
+            <label>Oxygen Beds</label>
+            <input name="oxygenBeds" value={formData.oxygenBeds} onChange={handleChange} />
 
-            <div>
-              <label htmlFor="availableBeds">Available Beds</label>
-            <input name="availableBeds" id='availableBeds' value={formData.availableBeds} onChange={handleChange} />
-            </div>
+            <label>Available Beds</label>
+            <input name="availableBeds" value={formData.availableBeds} onChange={handleChange} />
 
-            <div>
-              <label htmlFor="ventilators">Ventilators</label>
-              <input name="ventilators" id='ventilators' value={formData.ventilators} onChange={handleChange} />
-            </div>
-
+            <label>Ventilators</label>
+            <input name="ventilators" value={formData.ventilators} onChange={handleChange} />
 
             <div className='profile-btns'>
-            <button onClick={handleSave}>Save</button>
-            <button onClick={handleCancel}>Cancel</button>
+              <button onClick={handleSave}>Save</button>
+              <button onClick={handleCancel}>Cancel</button>
             </div>
           </>
         ) : (
           <>
-             <div className='logout'>
-              <div className='profile-btns' onClick={handleLogout}>
-                  <button>Logout</button>
+            <div className="logout">
+              <div className='profile-btns'>
+                <button onClick={handleLogout}>Logout</button>
               </div>
-             </div>
-            <p>Ambulance: <span className='profile-data'> {formData.ambulanceCount}</span></p>
+            </div>
 
-            <p>Available Ambulance: <span className='profile-data'>{formData.availableAmbulances}</span></p>
-
-            <p>Total Beds: <span className='profile-data'>{formData.totalBeds}</span></p>
-
-            <p>ICU Beds: <span className='profile-data'>{formData.icuBeds}</span></p>
-
-            <p>Oxygen Beds: <span className='profile-data'>{formData.oxygenBeds}</span></p>
-
-            <p>Available Beds: <span className='profile-data'>{formData.availableBeds}</span></p>
-
-            <p>Ventilators: <span className='profile-data'>{formData.ventilators}</span></p>
+            <p>Ambulances: <span className="profile-data">{formData.ambulanceCount}</span></p>
+            <p>Available: <span className="profile-data">{formData.availableAmbulances}</span></p>
+            <p>Total Beds: <span className="profile-data">{formData.totalBeds}</span></p>
+            <p>ICU Beds: <span className="profile-data">{formData.icuBeds}</span></p>
+            <p>Oxygen Beds: <span className="profile-data">{formData.oxygenBeds}</span></p>
+            <p>Available Beds: <span className="profile-data">{formData.availableBeds}</span></p>
+            <p>Ventilators: <span className="profile-data">{formData.ventilators}</span></p>
             <p>Last Updated: {formData.lastUpdated}</p>
           </>
         )}
-
       </div>
+
     </div>
   );
 };

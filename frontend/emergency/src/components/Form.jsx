@@ -200,8 +200,8 @@ const Form = () => {
           </div>
 
           {/* SUBMIT */}
-          <div className="submit">
-            <input type="submit" value="Submit Request" />
+          <div className="submit-form">
+             <input type="submit" />
           </div>
 
         </div>

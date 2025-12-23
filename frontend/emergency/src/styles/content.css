@@ -97,4 +97,5 @@ input[type=number]::-webkit-outer-spin-button {
     cursor: pointer;
     font-family: poppins;
     margin-bottom: 10px;
+    border-radius: 10px;
 }

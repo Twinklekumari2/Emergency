@@ -67,7 +67,7 @@ const LoginHospital = () => {
             />
           </div>
           <div className='profile-btns'>
-            <button>Submit</button>
+            <button>Login</button>
           </div>
         </form>
         <p>Do not have account?

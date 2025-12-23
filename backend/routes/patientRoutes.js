@@ -21,5 +21,19 @@ router.post('/request', async (req, res) => {
         res.status(500).json({error: err})
     }
 })
+router.get('/request',jwtAuthMiddleWare ,async (req, res) => {
+     try{
+        const userId = req.user.id;
+        const request = await Request.findById(userId);
+        if(!request){
+           res.status(401).json({message: "Request not found"});
+        }
+
+        res.status(200).json({message:"Request successfullt fetched", response: request});
+
+     }catch(err){
+        res.status(501).json({message: "Invalid server error"});
+     }
+})
 
 module.exports = router;

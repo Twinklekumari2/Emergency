@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const requestSchema = new mongoose.Schema({
-    // hospitalId:{
-    //     type:mongoose.Schema.Types.ObjectId,
-    //     ref: "Hospital"
-    // },
-     // 1️⃣ Patient Information
+    hospitalId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref: "Hospital"
+    },
+    //  1️⃣ Patient Information
     relationshipToPatient: {
         type: String,
         required: true
