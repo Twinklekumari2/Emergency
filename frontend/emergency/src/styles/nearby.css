@@ -19,11 +19,8 @@
     padding: 2rem;
     border: 2px sandybrown solid;
 }
-.hospital-page{
-    border: 2px solid white;
-}
 .hospital-list {
-    border: 2px solid white;
+    /* border: 2px solid white; */
     overflow-x: scroll;
 
     /* Firefox */

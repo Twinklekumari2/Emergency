@@ -62,7 +62,15 @@ const Form = () => {
     <div className="form">
       <form onSubmit={handleSubmit}>
         <div className="form-form">
-
+          <div className="form-form-hospital">
+            <h1>Hospital Details</h1>
+            <div className="form-form-hospital-detail">
+              <div className="form-data">
+                <label htmlFor="hospitalId">Hospital Id <span>*</span></label>
+                <input type="text" name="hospitalId" id="hospitalId" placeholder="Copy and paste the hospital Id" value={formData.hospitalId} onChange={handleChange} required />
+              </div>
+            </div>
+          </div>
           {/* UPPER FORM */}
           <div className="upper-form">
             <h1>PATIENT INFORMATION</h1>
