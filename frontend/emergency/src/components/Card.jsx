@@ -6,11 +6,11 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const Card = ({data}) => {
     const navigate = useNavigate()
-    const [hospitalData, setHospitalData] = useState();
-    const handleClick = async () => {
-        setHospitalData(data);
-        navigate('/emergency/hospital');
-    }
+    const handleClick = () => {
+        navigate('/emergency/hospital', {
+            state: { hospital: data }
+        });
+    };
   return (
     <div className='card'>
         <div className='card-profile'>

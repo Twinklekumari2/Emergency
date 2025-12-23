@@ -1,91 +1,137 @@
-.form{
+/* ================= PAGE ================= */
+.form {
     color: white;
-    margin-top: 15vh;
-    /* border:2px solid yellow; */
+    margin-top: 14vh;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 2rem 0;
+    padding: 2rem 1rem;
+}
+
+/* ================= MAIN CARD ================= */
+.form-form {
     width: 100%;
-    
-}
-.form-form{
-    border: 3.8px solid red;
+    max-width: 900px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem 3rem;
-    border-radius: 15px;
-    gap: 15px;
-    background-color: red;
-    box-shadow: -4px 4px 15px rgba(248, 247, 247);
+    gap: 2rem;
+    background: linear-gradient(135deg, #8b0000, #ff0000);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
 }
-.upper-form, .lower-form{
-    border: 1.8px solid red;
+
+/* ================= SECTION CARDS ================= */
+.upper-form,
+.lower-form {
+    background: rgba(0,0,0,0.85);
     padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    background-color: black;
-    /* background: rgba(255, 255, 255, 0.3);  
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px); */
-    border-radius:15px;
+    border-radius: 16px;
 }
-.upper-form-content, .lower-form-content{
-    /* border: 2px solid yellow; */
-    padding: 2rem;
+
+.upper-form h1,
+.lower-form h1 {
+    text-align: center;
+    margin-bottom: 1.8rem;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 10px;
+}
+
+/* ================= CONTENT ================= */
+.upper-form-content,
+.lower-form-content {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    justify-content: center;
-    /* align-items: center; */
     gap: 2rem;
 }
-.form-data{
+
+.upper-form-content-1 {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+/* ================= INPUT GROUP ================= */
+.form-data {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    min-width: 16rem;
-    /* justify-content: center;
-    align-items: center; */
+    gap: 6px;
+    flex: 1;
+    min-width: 250px;
 }
-.upper-form-content-1{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+/* ================= LABEL ================= */
+.form label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    opacity: 0.9;
 }
-.form label{
-    font-size: 1.3rem;
-    font-weight: 800;
+
+.form label span {
+    color: #ff4d4d;
 }
-.form input, .form textarea{
-    outline: none;
-    background-color: transparent;
+
+/* ================= INPUTS ================= */
+.form input,
+.form textarea {
+    background: transparent;
     border: none;
-    padding: 1rem;
-    border-bottom: 2.5px red solid;
-    border-radius: 5px;
+    border-bottom: 2px solid red;
+    padding: 10px 4px;
     color: white;
-    padding-bottom: 0.5rem;
-    font-size: 1rem;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.3s;
 }
-.form textarea{
-    min-height: 100px;
-    /* border: 2px solid yellow; */
+
+.form input::placeholder,
+.form textarea::placeholder {
+    color: rgba(255,255,255,0.5);
 }
-.submit input{
-    background-color: white;
-    padding: 0.8rem 1.8rem;
+
+.form input:focus,
+.form textarea:focus {
+    border-bottom-color: white;
+}
+
+/* ================= TEXTAREA ================= */
+.form textarea {
+    min-height: 110px;
+    resize: none;
+}
+
+/* ================= SUBMIT ================= */
+.submit-form {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.submit-form input {
+    background: white;
     color: black;
-    font-size: 1.5rem;
+    padding: 0.9rem 2.4rem;
+    font-size: 1.1rem;
     font-weight: 700;
-    font-family: poppins;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.form label span{
-    color:rgb(255, 98, 0);
+
+.submit-form input:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255,255,255,0.4);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+    .form-form {
+        padding: 1.5rem;
+    }
+
+    .upper-form-content-1 {
+        flex-direction: column;
+    }
 }

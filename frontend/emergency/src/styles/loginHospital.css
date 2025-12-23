@@ -1,39 +1,126 @@
-.login-hospital{
-    /* border: 2px solid red; */
-    margin: auto;
+/* ================= PAGE ================= */
+.login-hospital {
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* margin-top: 20vh; */
-    padding: 6rem 0;
+    gap: 4rem;
+    padding: 4rem 5%;
+    /* background: linear-gradient(135deg, #0b0000, #200000); */
+    color: white;
 }
-.container-login-hospital{
-    /* border: 2px solid red; */
-    /* height: 80%; */
-    width: 28%;
-    padding: 2rem;
+
+/* ================= IMAGE ================= */
+.login-hospital img {
+    max-width: 420px;
+    width: 100%;
+    object-fit: contain;
+}
+
+/* ================= LOGIN CARD ================= */
+.container-login-hospital {
+    width: 100%;
+    max-width: 380px;
+    padding: 2.5rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    background: rgba(255,255,255,0.08);
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    backdrop-filter: blur(12px);
 }
-.container-login-hospital form{
-    width: 100%;
+
+/* ================= HEADING ================= */
+.login-heading {
+    text-align: center;
+    letter-spacing: 2px;
 }
-.labelwithinput{
-    width: 100%;
-    /* border: 2px solid red; */
-    /* height: 80%; */
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-}
-.labelwithinput label{
-    font-size: 1.5rem;
-}
-.signupoption{
+
+.login-heading span {
     color: red;
-    font-size: 1.1rem;
-    margin-left: 5px;
+}
+
+/* ================= FORM ================= */
+.container-login-hospital form {
+    width: 100%;
+}
+
+/* ================= INPUT GROUP ================= */
+.labelwithinput {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+}
+
+.labelwithinput label {
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+    opacity: 0.9;
+}
+
+.labelwithinput input {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-size: 0.95rem;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    transition: background 0.3s;
+}
+
+.labelwithinput input:focus {
+    background: rgba(255,255,255,0.25);
+}
+
+/* ================= BUTTON ================= */
+.profile-btns {
+    margin-top: 1.5rem;
+}
+
+.profile-btns button {
+    width: 100%;
+    padding: 0.7rem;
+    border-radius: 25px;
+    border: none;
     cursor: pointer;
+    font-weight: 700;
+    font-size: 1rem;
+    background: linear-gradient(135deg, red, darkred);
+    color: white;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.profile-btns button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(255,0,0,0.4);
+}
+
+/* ================= SIGNUP TEXT ================= */
+.container-login-hospital p {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.signupoption {
+    color: #ff4d4d;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.signupoption:hover {
+    text-decoration: underline;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+    .login-hospital {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .login-hospital img {
+        max-width: 280px;
+    }
 }

@@ -53,8 +53,6 @@ const Nearby = () => {
                     <div className='button'>
                         Fetch My Location
                     </div>
-                    <br /> OR <br />
-                    <input type="text" placeholder='Type your city name' />
                 </div>
                 </div>
             )}

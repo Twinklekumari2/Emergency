@@ -13,6 +13,8 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faAmbulance } from "@fortawesome/free-solid-svg-icons";
 import LoginHospital from './components/LoginHospital.jsx';
 import AdminProtectedRoute from "./ProtectedRoutes.jsx";
+import Request from './pages/Request.jsx';
+import Emergency from './pages/Emergency.jsx';
 
 library.add(faAmbulance);
 
@@ -33,6 +35,8 @@ const App = () => {
         <Route path='/about-us' element={<About/>}/> 
         <Route path='/login' element={<Login/>}/>
         <Route path='/login/hospital' element={<LoginHospital/>}/>
+        <Route path='/requests' element={<Request/>}/>
+        <Route path='/emergency/hospital' element={<Emergency/>}/>
 
         <Route
   path="/admin"

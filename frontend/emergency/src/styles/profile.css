@@ -1,76 +1,184 @@
-.profile{
-    margin-top: 15vh;
-    display: flex;
-    justify-content: space-between;
-    gap: 5rem;
-    padding: 2rem 2rem;
-}
-.profile-left-side{
-    display: flex;
-    flex-direction: column;
-}
-.profile-left-upper{
-    /* border: 2px yellow solid; */
-    display: flex;
-    justify-content: center;
-    /* align-items: center; */
+/* ================= MAIN LAYOUT ================= */
+.profile {
+    margin-top: 14vh;
+    display: grid;
+    grid-template-columns: 2.5fr 2fr 1.5fr;
     gap: 3rem;
-}
-.profile-left-upper-left{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.profile-left-upper-left img{
-    border-radius: 50%;
-}
-.profile-left-upper-right{
-    /* border: 2px yellow solid; */
-    line-height: 10px;
-}
-.profile-left-upper-right-name{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-right: 5px;
-}
-.profile-left-upper-right-name a{
-    /* border: 2px yellow solid; */
-    cursor: pointer;
+    padding: 2rem 4%;
+    color: white;
 }
 
-.profile-btns{
+/* ================= LEFT SIDE ================= */
+.profile-left-side {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 1rem 2rem;
+    flex-direction: column;
+    gap: 2rem;
 }
-.profile-btns button{
-    background: linear-gradient(to right, black, red);
-    padding: 0.5rem 1rem;
+
+/* ---------- TOP CARD ---------- */
+.profile-left-upper {
+    display: flex;
+    gap: 2.5rem;
+    background: rgba(255,255,255,0.08);
+    padding: 1.8rem;
+    border-radius: 18px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+}
+
+.profile-left-upper-left img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid red;
+}
+
+.profile-left-upper-left p {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    opacity: 0.85;
+}
+
+/* ---------- RIGHT PART ---------- */
+.profile-left-upper-right {
+    flex: 1;
+}
+
+.profile-left-upper-right-name {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.edit-btn {
+    background: transparent;
+    border: 1px solid red;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.edit-btn:hover {
+    background: red;
+}
+
+/* ================= ADMIN CARD ================= */
+.profile-left-side > div h1 {
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 6px;
+}
+
+.profile-left-side p {
+    margin: 6px 0;
+    font-size: 0.95rem;
+}
+
+/* ================= MIDDLE SIDE ================= */
+.profile-middle-side {
+    background: rgba(255,255,255,0.08);
+    padding: 2rem;
+    border-radius: 18px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+}
+
+.profile-middle-side h1 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.profile-middle-side form{
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-middle-side form div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.profile-middle-side label {
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+}
+
+.profile-middle-side input,
+.profile-middle-side select {
+    padding: 8px;
+    border-radius: 8px;
     border: none;
     outline: none;
-    border-radius: 10px;
+}
+
+/* ================= RIGHT SIDE ================= */
+.profile-right-side {
+    background: rgba(255,255,255,0.08);
+    padding: 2rem;
+    border-radius: 18px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+}
+
+.profile-right-side p {
+    margin: 10px 0;
+    font-size: 0.95rem;
+}
+
+/* ================= BUTTONS ================= */
+.profile-btns {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+}
+
+.profile-btns button {
+    background: linear-gradient(135deg, red, black);
+    padding: 0.6rem 1.4rem;
+    border: none;
+    border-radius: 20px;
     color: white;
     cursor: pointer;
-    font-weight: 700;
+    font-weight: 600;
+    transition: transform 0.2s;
 }
 
-.logout{
+.profile-btns button:hover {
+    transform: translateY(-2px);
+}
+
+.logout {
     display: flex;
-    justify-content: end;
-    align-items: start;
+    justify-content: flex-end;
 }
 
-.profile-data{
-    color: red;
+/* ================= DATA HIGHLIGHT ================= */
+.profile-data {
+    color: #ff4d4d;
     font-weight: 700;
-    font-size: 1.2rem;
 }
-@media only screen and (max-width: 1066px) {
-    .profile{
-        padding: 2rem 0;;
+
+/* ================= REQUEST BUTTON ================= */
+.request {
+    margin-top: 1rem;
+    width: fit-content;
+    background: red;
+    padding: 8px 18px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.request:hover {
+    background: white;
+    color: red;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1100px) {
+    .profile {
+        grid-template-columns: 1fr;
     }
-    
 }
