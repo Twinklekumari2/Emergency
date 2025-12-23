@@ -107,7 +107,7 @@ const Profile = ({ data }) => {
                 <h2>{formData.hospitalName}</h2>
                 <p>{formData.officialEmail}</p>
 
-                <div className='request' onClick={() => navigate('/requests')}>
+                <div className='request' onClick={() => navigate('/requests', {state: {hospitalData: data}})}>
                   Requests
                 </div>
               </>

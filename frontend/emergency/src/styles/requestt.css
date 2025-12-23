@@ -1,4 +1,125 @@
-.requests{
-    margin-top: 15vh;
-    border: 2px solid hotpink;
+/* ================= PAGE ================= */
+.requests {
+    margin-top: 14vh;
+    padding: 2rem 5%;
+    color: white;
+}
+
+/* ================= HOSPITAL NAME ================= */
+.hospital-Name {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.hospital-Name h1 {
+    font-size: 2rem;
+    letter-spacing: 1px;
+}
+
+/* ================= REQUEST LIST ================= */
+.patient-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* ================= REQUEST CARD ================= */
+.individual-patient-detail {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    background: rgba(255,255,255,0.08);
+    padding: 1.5rem 2rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+    transition: transform 0.2s ease;
+}
+.name-section{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.req-btns{
+    display: flex;
+    justify-content: space-around;
+    gap: 2rem;
+}
+
+.individual-patient-detail:hover {
+    transform: translateY(-2px);
+}
+
+/* ================= HEADER ROW ================= */
+.individual-patient-detail > h2 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+/* ================= ACTION ROW ================= */
+.individual-patient-detail > div {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* ================= BUTTONS ================= */
+.accept,
+.ignore {
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.accept {
+    background: linear-gradient(135deg, #1fd655, #0ea944);
+    color: black;
+}
+
+.accept:hover {
+    box-shadow: 0 6px 14px rgba(31,214,85,0.4);
+}
+
+.ignore {
+    background: transparent;
+    border: 1px solid #ff4d4d;
+    color: #ff4d4d;
+}
+
+.ignore:hover {
+    background: #ff4d4d;
+    color: white;
+}
+
+/* ================= DROPDOWN ICON ================= */
+.individual-patient-detail svg {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.individual-patient-detail svg:hover {
+    transform: rotate(180deg);
+}
+
+/* ================= EXPANDED DETAILS ================= */
+.patient-details {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 600px) {
+    .individual-patient-detail > div {
+        flex-wrap: wrap;
+        gap: 0.8rem;
+    }
 }

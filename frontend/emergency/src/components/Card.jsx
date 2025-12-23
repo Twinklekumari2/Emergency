@@ -15,7 +15,7 @@ const Card = ({data}) => {
     <div className='card'>
         <div className='card-profile'>
             <div className='card-img-part'>
-               <img src={data.imageOfHospital} alt="Hospital image" />
+               <img src={data.imageOfHospital} alt="Hospital image" loading='lazy' />
                <p className='hospital-name'>{data.hospitalName}</p>
             </div>
             <div className='card-hospital-info'>
@@ -30,7 +30,7 @@ const Card = ({data}) => {
                          </p>
                      </> : 
                       <>
-                      <p className='busy-status'>
+                      <p className='busy-status'>0
                      </p>
                       </>}
                       
