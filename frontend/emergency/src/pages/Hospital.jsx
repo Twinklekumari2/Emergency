@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Content from '../components/Content';
 import Profile from '../components/Profile'; // make a profile component
+import { api } from '../api';
 
 const Hospital = () => {
 
@@ -22,7 +23,7 @@ const Hospital = () => {
       }
 
       try {
-        const res = await axios.get("http://localhost:4000/hospital/me", {
+        const res = await api.get("/hospital/me", {
           headers: { Authorization: `Bearer ${token}` }
         });
 
