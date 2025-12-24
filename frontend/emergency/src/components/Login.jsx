@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import axios from 'axios'
 import './../styles/login.css'
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { api } from "../api";
 
 const AuthPage = () => {
   const navigate = useNavigate();
@@ -28,8 +28,8 @@ const AuthPage = () => {
     e.preventDefault();
 
     const url = isSignup
-      ? "http://localhost:4000/user/signup"
-      : "http://localhost:4000/user/login";
+      ? "/user/signup"
+      : "/user/login";
 
     const payload = isSignup
       ? {
@@ -44,7 +44,7 @@ const AuthPage = () => {
         };
 
     try {
-      const res = await axios.post(url , payload);
+      const res = await api.post(url , payload);
 
       setMessage(isSignup ? "Signup successful!" : "Login successful!");
       

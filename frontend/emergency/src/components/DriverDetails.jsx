@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 import './../styles/driverDetail.css'
+import {api} from './../api'
 
 const DriverDetails = ({ hospitalId }) => {
 
@@ -13,9 +14,8 @@ const DriverDetails = ({ hospitalId }) => {
     const getDriversDetails = async () => {
       try {
         const token = localStorage.getItem("hospital");
-        const url = "http://localhost:4000/hospital/ambulance";
 
-        const res = await axios.get(url, {
+        const res = await api.get("/hospital/ambulance", {
           headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -36,10 +36,9 @@ const DriverDetails = ({ hospitalId }) => {
   const handleUpdate = async (id) => {
     try {
       const token = localStorage.getItem("hospital");
-      const url = `http://localhost:4000/hospital/ambulance/${id}`;
 
-      await axios.put(
-        url,
+      await api.put(
+        `/hospital/ambulance/${id}`,
         { status: statusValue },
         {
           headers: { Authorization: `Bearer ${token}` }

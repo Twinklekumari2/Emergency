@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useLocation } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { api } from '../api';
 
 
 const Requests = () => {
@@ -16,9 +17,9 @@ const Requests = () => {
     useEffect(() => {
         const getRequest = async () =>{
             const token = localStorage.getItem("hospital");
-            const url = 'http://localhost:4000/patient/request'
+            const url = '/patient/request'
 
-            const res = await axios.get(url,
+            const res = await api.get(url,
                 {
                     headers:{
                         Authorization: `Bearer ${token}`

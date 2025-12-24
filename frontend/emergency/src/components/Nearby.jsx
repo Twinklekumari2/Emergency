@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import './../styles/nearby.css'
-import axios from 'axios'
 import getUserLocation from './../script/location.js'
 import Card from './Card.jsx'
+import { api } from '../api.js'
 
 const Nearby = () => {
     const [toggleScreen, setToggleScreen] = useState(false);
@@ -12,8 +12,8 @@ const Nearby = () => {
 
     const getDataCity = async (cityName) => {
         try {
-            const url = `http://localhost:4000/location/city/${cityName}`;
-            const res = await axios.get(url);
+            const url = `/location/city/${cityName}`;
+            const res = await api.get(url);
             setCityData(res.data.response);
         } catch (err) {
             console.log("Error fetching city data:", err);

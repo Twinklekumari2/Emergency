@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import Navbar from './Navbar';
 import { toast } from 'react-toastify';
+import { api } from './../api'
 
 const Admin = () => {
     const [data, setData] = useState({});
@@ -13,8 +14,7 @@ const Admin = () => {
 
     async function handleApprove(id){
         const token = localStorage.getItem("admin");
-        const url = `http://localhost:4000/user/approve/${id}`;
-        const res = await axios.patch(url,
+        const res = await api.patch(`/user/approve/${id}`,
             {},
             {
                 headers: {
@@ -38,7 +38,7 @@ const Admin = () => {
             }
         )
         console.log(res);
-        toast.success("Hospital Approved");
+        toast.success("Hospital Reject");
     }
 
     useEffect(() => {

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./../styles/content.css";
 import axios from "axios";
 import LoginHospital from "./LoginHospital";
+import {api} from './../api'
 
 const Content = () => {
   const [formData, setFormData] = useState({
@@ -67,8 +68,8 @@ const Content = () => {
 
     try {
 
-      const res = await axios.post(
-        "http://localhost:4000/hospital/hospitals",
+      const res = await api.post(
+        "/hospital/hospitals",
         formData
       );
       

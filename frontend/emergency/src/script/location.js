@@ -1,19 +1,19 @@
 import { toast } from "react-toastify";
+import { api } from "../api";
 
 async function getAddressFromCoords(lat, lon) {
     try {
-        const res = await fetch(
-            `http://localhost:4000/location/reverse-geocode?lat=${lat}&lon=${lon}`
+        const res = await api.get(
+            `/location/reverse-geocode?lat=${lat}&lon=${lon}`
         );
-        const data = await res.json();
-        console.log("API response:", data);
+        console.log("API response:", res.data);
 
         // Check correct path for address
-        if (!data.response || !data.response.address) {
+        if (!res.data.response || !res.data.response.address) {
             return null;
         }
 
-        return data.response.address; // return the address object
+        return res.data.response.address; // return the address object
 
     } catch (error) {
         console.error("Error fetching address:", error);

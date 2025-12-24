@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { api } from '../api'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import './../styles/loginHospital.css'
@@ -21,8 +21,8 @@ const LoginHospital = () => {
     async function handleSubmit(e){
         e.preventDefault();
          try{
-            const url = "http://localhost:4000/hospital/login"
-            const res = await axios.post(url,formData);
+            const url = "/hospital/login"
+            const res = await api.post(url,formData);
             
             const token = res.data.token;
             localStorage.setItem("hospital", token)

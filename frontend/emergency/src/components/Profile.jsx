@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe, faPen } from "@fortawesome/free-solid-svg-icons";
 import DriverDetails from './DriverDetails';
 import { useNavigate } from 'react-router-dom';
+import { api } from '../api';
 
 const Profile = ({ data }) => {
   const navigate = useNavigate()
@@ -35,8 +36,8 @@ const Profile = ({ data }) => {
     e.preventDefault();
     const token = localStorage.getItem("hospital");
 
-    await axios.post(
-      `http://localhost:4000/hospital/ambulance/${data._id}`,
+    await api.post(
+      `/hospital/ambulance/${data._id}`,
       ambulanceData,
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -45,8 +46,8 @@ const Profile = ({ data }) => {
   const handleSave = async () => {
     const token = localStorage.getItem("hospital");
 
-    await axios.put(
-      `http://localhost:4000/hospital/update/${formData._id}`,
+    await api.put(
+      `/hospital/update/${formData._id}`,
       formData,
       { headers: { Authorization: `Bearer ${token}` } }
     );

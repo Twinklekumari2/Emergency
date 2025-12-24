@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./../styles/form.css";
-import axios from "axios";
+import { api } from "../api";
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -28,8 +28,8 @@ const Form = () => {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await axios.post(
-        "http://localhost:4000/patient/request",
+      const res = await api.post(
+        "/patient/request",
         formData,
         {
           headers: {
