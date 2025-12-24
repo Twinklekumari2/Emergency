@@ -28,8 +28,8 @@ const Admin = () => {
 
     async function handleReject(id){
         const token = localStorage.getItem("admin");
-        const url = `http://localhost:4000/user/reject/${id}`;
-        const res = await axios.patch(url,
+        const url = `/user/reject/${id}`;
+        const res = await api.patch(url,
             {},
             {
                 headers: {
@@ -44,7 +44,7 @@ const Admin = () => {
     useEffect(() => {
         const getData = async () => {
             const token = localStorage.getItem("admin");
-            const res = await axios.get('http://localhost:4000/hospital/list',{
+            const res = await api.get('/hospital/list',{
                 headers: {
                     Authorization:`Bearer ${token}`
                 }
