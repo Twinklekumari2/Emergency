@@ -10,8 +10,6 @@ app.use(cors({
     credentials: true
 }));
 
-app.options("*", cors());
-
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 const PORT = process.env.PORT || 4000;
