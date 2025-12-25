@@ -5,10 +5,12 @@ require('dotenv').config();
 const cors = require('cors'); 
 
 app.use(cors({
-    origin: ["https://emergency-tan-six.vercel.app", "http://localhost/5173"],
+    origin: ["https://emergency-tan-six.vercel.app", "http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true
 }));
+
+app.options("*", cors());
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());

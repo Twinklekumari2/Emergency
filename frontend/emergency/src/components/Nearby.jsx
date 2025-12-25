@@ -2,75 +2,73 @@ import React, { useEffect, useState } from 'react'
 import './../styles/nearby.css'
 import getUserLocation from './../script/location.js'
 import Card from './Card.jsx'
-import { api } from '../api.js'
+import {api} from '../api.js'
 
 const Nearby = () => {
-    const [toggleScreen, setToggleScreen] = useState(false);
-    const [city, setCity] = useState("");
-    const [stateName, setStateName] = useState("");
-    const [cityData, setCityData] = useState([]);
+  const [toggleScreen, setToggleScreen] = useState(false);
+  const [city, setCity] = useState("");
+  const [stateName, setStateName] = useState("");
+  const [hospitals, setHospitals] = useState([]);
 
-    const getDataCity = async (cityName) => {
-        try {
-            const url = `/location/city/${cityName}`;
-            const res = await api.get(url);
-            setCityData(res.data.response);
-        } catch (err) {
-            console.log("Error fetching city data:", err);
-        }
+  const getCityHospitals = async (cityName) => {
+    const res = await api.get(`/location/city/${cityName}`);
+    return res.data.response;
+  };
+
+  const getStateHospitals = async (state) => {
+    const res = await api.get(`/location/state/${state}`);
+    return res.data.response;
+  };
+
+  useEffect(() => {
+    const storedCity = localStorage.getItem("city");
+    const storedState = localStorage.getItem("state");
+
+    const loadHospitals = async (cityName, state) => {
+      let data = await getCityHospitals(cityName);
+      if (!data.length && state) {
+        data = await getStateHospitals(state);
+      }
+      setHospitals(data);
+      setToggleScreen(true);
     };
 
-    useEffect(() => {
-      const handleClick = async () => {
-        try {
-            const address = await getUserLocation();
+    if (storedCity && storedState) {
+      setCity(storedCity);
+      setStateName(storedState);
+      loadHospitals(storedCity, storedState);
+      return;
+    }
 
-            const cityName =
-                address.city || address.town || address.village || "";
-            const state =
-                address.state || "";
+    const fetchLocation = async () => {
+      const address = await getUserLocation();
+      const cityName = address.city || address.town || address.village || "";
+      const state = address.state || "";
 
-            setCity(cityName);
-            setStateName(state);
-            setToggleScreen(true);
+      setCity(cityName);
+      setStateName(state);
 
-            if (cityName) {
-                getDataCity(cityName);
-            }
-        } catch (err) {
-            console.error("Error fetching location:", err);
-            alert("Could not fetch location. Please type your city manually.");
-        }
+      localStorage.setItem("city", cityName);
+      localStorage.setItem("state", state);
+
+      loadHospitals(cityName, state);
     };
-    handleClick();
-    }, [])
 
-    return (
-        <div className='near-by'>
-            {!toggleScreen && (
-                <div className='near-by-loc'>
-                <div className='location-buttons'>
-                    <div className='button'>
-                        Fetch My Location
-                    </div>
-                </div>
-                </div>
-            )}
-            <div className='hospital-page'>
-              <h2>Hospital in your {city}</h2>
-              <div className='hospital-list'>
-              {toggleScreen && (
-                <>  
-                    {cityData.map((hospital) => (
-                         <Card key={hospital._id} data={hospital} />
-                    ))}
-                </>
-            )}
-              </div>
-            </div>
-            
-        </div>
-    );
+    fetchLocation();
+  }, []);
+
+  return (
+    <div className='near-by'>
+      <h2>Hospitals near you ({city || stateName})</h2>
+
+      <div className='hospital-list'>
+        {toggleScreen &&
+          hospitals.map(h => (
+            <Card key={h._id} data={h} />
+          ))}
+      </div>
+    </div>
+  );
 };
 
 export default Nearby;
