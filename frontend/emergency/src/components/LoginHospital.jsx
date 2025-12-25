@@ -32,6 +32,7 @@ const LoginHospital = () => {
 
          }catch(err){
             console.log(err);
+            toast.error("Login failed 💔");
          }
     }
   return (

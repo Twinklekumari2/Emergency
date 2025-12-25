@@ -3,7 +3,6 @@ import "./../styles/Navbar.css"
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faList } from '@fortawesome/free-solid-svg-icons'
-import getUserLocation from './../script/location.js'
 
 
 const Navbar = () => {

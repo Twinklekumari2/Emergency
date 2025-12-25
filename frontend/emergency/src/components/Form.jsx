@@ -26,7 +26,7 @@ const Form = () => {
     e.preventDefault();
 
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token"); //token -> patient form
 
       const res = await api.post(
         "/patient/request",

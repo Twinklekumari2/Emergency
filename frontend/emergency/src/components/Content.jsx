@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import "./../styles/content.css";
-import axios from "axios";
-import LoginHospital from "./LoginHospital";
 import {api} from './../api'
 
 const Content = () => {

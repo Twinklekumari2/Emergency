@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 import './../styles/driverDetail.css'
 import {api} from './../api'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 
 const DriverDetails = ({ hospitalId }) => {
 
@@ -63,6 +65,7 @@ const DriverDetails = ({ hospitalId }) => {
   return (
     <div>
       <h1>Driver Details</h1>
+      <div>
       <div className='driver'>
       {details
   .filter(detail => detail.hospitalId === hospitalId)
@@ -96,7 +99,10 @@ const DriverDetails = ({ hospitalId }) => {
         
       ))}
       </div>
-
+      <div className='three-dots'>
+          <FontAwesomeIcon icon={faEllipsisV} style={{"transform": "90deg"}} />
+      </div>
+      </div>
     </div>
   );
 };

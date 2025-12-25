@@ -6,6 +6,7 @@ import { faGlobe, faPen } from "@fortawesome/free-solid-svg-icons";
 import DriverDetails from './DriverDetails';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../api';
+import { toast } from 'react-toastify';
 
 const Profile = ({ data }) => {
   const navigate = useNavigate()
@@ -41,6 +42,7 @@ const Profile = ({ data }) => {
       ambulanceData,
       { headers: { Authorization: `Bearer ${token}` } }
     );
+    toast.success("Driver details added successfully")
   };
 
   const handleSave = async () => {

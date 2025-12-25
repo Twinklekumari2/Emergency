@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import './../styles/admin.css'
-import axios from 'axios'
-import dropdown from './../assets/down.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import Navbar from './Navbar';
