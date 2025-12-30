@@ -40,7 +40,6 @@ export default function getUserLocation() {
                     toast.success("Location Successfully Fetched", {
                         position: "top-right",
                         style: {
-                            background: "linear-gradient(135deg, red, black)",
                             color: "#fff",
                             borderRadius: "10px",
                             padding: "14px",

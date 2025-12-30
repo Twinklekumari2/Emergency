@@ -92,7 +92,6 @@
   border-radius: 6px;
   max-width: 200px;
   text-align: center;
-  /* opacity: 0.9; */
 }
 
 
@@ -127,3 +126,15 @@
         line-height: normal;
     }
 }
+@media only screen and (max-width:480px){
+    .right-hero-section .tagline{
+        position: absolute;
+        bottom: -1%;
+        right: 25%;
+        font-size: 1rem;
+        padding: 0.2rem;
+    }
+    .hero-section{
+        margin-top: 1rem;
+    }
+} 

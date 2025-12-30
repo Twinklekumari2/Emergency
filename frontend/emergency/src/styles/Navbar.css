@@ -23,7 +23,7 @@
 .middle{
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1.5rem;
     padding: 0 10px;
     font-size: 1.1rem;
     font-weight: 700;
@@ -44,7 +44,7 @@
 }
 .middle h3.active {
     background-color: red;
-    color: black;
+    color: rgb(255, 255, 255);
     padding: 3px 8px;
     border-radius: 5px;
 }
@@ -56,7 +56,7 @@
     gap: 1rem;
 }
 
-.right-side .button, .right-side h3{
+ .middle h4{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -82,7 +82,7 @@
         flex-direction: column;
         position: absolute;
         top: 11vh;
-        right: 0;
+        right: 10%;
         gap: 0;
         /* background: white; */
         color: wheat;
@@ -120,9 +120,12 @@
     .left-side h1 span{
         font-size: 1.4rem;
     }
-
-    .right-side .button{
+    
+    .right-side{
+        gap: 2px;
+    }
+    .right-side h3{
         padding: 8px 15px;
-        font-size: 0.8rem;
+        font-size: 0.68rem;
     }
 }

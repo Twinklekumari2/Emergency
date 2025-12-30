@@ -1,93 +1,123 @@
 .whyItMatters{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    /* align-items: center; */
-    margin-top: 15vh;
-    /* border: 2px solid yellow; */
-    width: auto;
+    gap: 2rem;
+    margin-top: 10vh;
     padding: 1rem 2rem;
-    margin-bottom: 3rem;
 }
+
+/* LEFT */
 .why-left-side{
     font-size: 1.4rem;
-    padding: 0 3rem 0 3rem;
-    background:linear-gradient(135deg, red, black);
+    padding: 1.5rem;
+    background: linear-gradient(135deg, red, black);
+    color: white;
 }
+
+/* RIGHT */
 .why-right-side{
-    width: 70%;
-    font: 1rem;
-    padding: 0 3rem 0 3rem;
+    width: 100%;
+    font-size: 1rem;
+    padding: 1.5rem;
+    line-height: 1.6;
 }
+
 .why-right-side span{
     color: red;
+    font-weight: 600;
 }
+
+/* INCIDENTS */
 .why-incidents h1{
     font-size: 2rem;
-    padding: 0 2rem 0 2rem;
+    padding: 0 1rem;
     font-weight: 700;
     color: red;
 }
-.why-incidents ul li{
-    margin-bottom: 1rem;
+
+.why-incidents ul{
+    padding: 0;
 }
+
 .why-incidents li{
     border-left: 3px solid red;
-    border-radius: 5px;
-    padding: 0.7rem 2rem;
+    padding: 1rem;
     list-style: none;
+    margin-bottom: 1rem;
+    border-radius: 6px;
 }
+
 .why-incidents h2{
-    width: fit-content;
-    font-size: 1.7rem;
+    font-size: 1.5rem;
     font-weight: 700;
     border-bottom: 2px solid red;
-    padding-bottom: 2px;
-    border-radius: 5px;
-    text-wrap: wrap;
+    padding-bottom: 0.3rem;
 }
+
 .why-incidents p{
-    width: fit-content;
+    font-size: 1rem;
+    line-height: 1.6;
 }
-.functionality{
-    
-}
+
+/* FUNCTIONALITY */
 .func-heading{
-    background:linear-gradient(135deg, black, red);
-    font-size: 1.5rem;
-    padding: 1rem 2rem 0 0.5rem;
-    text-align: right;
+    background: linear-gradient(135deg, black, red);
+    font-size: 1.4rem;
+    padding: 1rem;
+    text-align: center;
     font-weight: 700;
+    color: white;
 }
+
 .func-content{
     display: flex;
-    justify-content: left;
+    justify-content: center;
+    padding: 1rem;
 }
-.func-content img {
+
+.func-content img{
     width: 100%;
-    max-width: 1000px;   /* or whatever size you want */
+    max-width: 900px;
     height: auto;
-    display: block;
-    margin: 0 auto;     /* centers the image */
 }
-@media only screen and (max-width:650px){
-    .why-incidents p, .why-incidents h2{
-        width: 100%;
-        /* border: 2px solid yellow; */
+@media (max-width: 768px){
+    .why-left-side{
+        font-size: 1.2rem;
+        text-align: center;
     }
-    .why-incidents{
-        /* border: 2px solid yellow; */
-        width: 100%;
+
+    .why-right-side{
+        font-size: 0.95rem;
+        padding: 1rem;
     }
-    .whyItMatters{
-        width: 100%;
-        /* border: 2px solid yellow; */
-        /* margin-left: 17%; */
-        padding: 0 5rem;
+
+    .why-incidents h2{
+        font-size: 1.3rem;
     }
 }
-@media only screen and (max-width:250px){
+@media (max-width: 480px){
     .whyItMatters{
-        padding: 0 1rem;
+        padding: 1rem;
+    }
+
+    .why-left-side h1{
+        font-size: 1.4rem;
+    }
+
+    .why-right-side h3{
+        font-size: 0.95rem;
+    }
+
+    .why-incidents h1{
+        font-size: 1.6rem;
+        text-align: center;
+    }
+
+    .why-incidents h2{
+        font-size: 1.2rem;
+    }
+
+    .func-heading h1{
+        font-size: 1.3rem;
     }
 }

@@ -11,11 +11,11 @@
 /* ================= MAIN CARD ================= */
 .form-form {
     width: 100%;
-    max-width: 900px;
+    min-width: 400px;
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    background: linear-gradient(135deg, #8b0000, #ff0000);
+    /* background: linear-gradient(135deg, #8b0000, #ff0000); */
     padding: 2.5rem;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.4);
@@ -137,4 +137,11 @@
     .upper-form-content-1 {
         flex-direction: column;
     }
+}
+@media only screen and (max-width: 468px){
+   .form{
+    margin-top: 2vh;
+    width: 100%;
+    margin-left: 3rem;
+   }
 }

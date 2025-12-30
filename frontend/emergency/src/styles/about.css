@@ -31,7 +31,7 @@
 
 @media only screen and (max-width: 500px){
     .about{
-        font-size: 2rem;
+        font-size: 1rem;
         padding: 1rem;
     }
 }

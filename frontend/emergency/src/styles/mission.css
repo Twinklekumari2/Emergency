@@ -44,6 +44,7 @@
     .mission{
         flex-direction: column-reverse;
         width: 100%;
+        gap: 0.5rem;
     }
     .mission-right-side{
         flex-direction: row;
