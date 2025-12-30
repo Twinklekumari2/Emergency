@@ -17,10 +17,9 @@ const Requests = () => {
     useEffect(() => {
         const getRequest = async () =>{
             const token = localStorage.getItem("hospital");
-            const url = '/patient/request'
+            const url = '/patient/request';
 
-            const res = await api.get(url,
-                {
+            const res = await api.get(url,{
                     headers:{
                         Authorization: `Bearer ${token}`
                     }
