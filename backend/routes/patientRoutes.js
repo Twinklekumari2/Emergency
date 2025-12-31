@@ -20,8 +20,8 @@ router.post("/request", async (req, res) => {
 });
 router.get("/request", jwtAuthMiddleWare, async (req, res) => {
   try {
-    console.log("Searching for hospitalId:", req.user.id);
-    const requests = await Request.find({ hospitalId: req.user.id });
+    const regNo = req.user.registrationNo;
+    const requests = await Request.find({ registrationNo: regNo});
     console.log("Found requests:", requests);
 
     // const requests = await Request.find({ hospitalId });

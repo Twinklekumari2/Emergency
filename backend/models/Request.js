@@ -5,6 +5,10 @@ const requestSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
+    registrationNo:{
+        type:String,
+        required:true,
+    },
     //  1️⃣ Patient Information
     relationshipToPatient: {
         type: String,

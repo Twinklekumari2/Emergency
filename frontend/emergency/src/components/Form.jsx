@@ -5,20 +5,21 @@ import { api } from "../api";
 const Form = () => {
   const [formData, setFormData] = useState({
     relationshipToPatient: "",
+    registrationNo: "",
     bloodGroup: "",
     notes: "",
     contactName: "",
     contactPhone: "",
     contactEmail: "",
-    hospitalId: "" ,
-    location:"",
-    address:""
+    hospitalId: "",
+    location: "",
+    address: "",
   });
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -28,30 +29,25 @@ const Form = () => {
     try {
       const token = localStorage.getItem("token"); //token -> patient form
 
-      const res = await api.post(
-        "/patient/request",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
+      const res = await api.post("/patient/request", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       alert("Request sent successfully!");
       setFormData({
-  relationshipToPatient: "",
-  bloodGroup: "",
-  notes: "",
-  contactName: "",
-  contactPhone: "",
-  contactEmail: "",
-  hospitalId: "",
-  location:"",
-  address:""
-});
-
-
+        relationshipToPatient: "",
+        registrationNo: "",
+        bloodGroup: "",
+        notes: "",
+        contactName: "",
+        contactPhone: "",
+        contactEmail: "",
+        hospitalId: "",
+        location: "",
+        address: "",
+      });
     } catch (err) {
       console.log(err);
       alert("Something went wrong!");
@@ -66,8 +62,32 @@ const Form = () => {
             <h1>Hospital Details</h1>
             <div className="form-form-hospital-detail">
               <div className="form-data">
-                <label htmlFor="hospitalId">Hospital Id <span>*</span></label>
-                <input type="text" name="hospitalId" id="hospitalId" placeholder="Copy and paste the hospital Id" value={formData.hospitalId} onChange={handleChange} required />
+                <label htmlFor="hospitalId">
+                  Hospital Id <span>*</span>
+                </label>
+                <input
+                  type="text"
+                  name="hospitalId"
+                  id="hospitalId"
+                  placeholder="Copy and paste the hospital Id"
+                  value={formData.hospitalId}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="form-data">
+                <label htmlFor="registrationNo">
+                  RegistrationNo <span>*</span>
+                </label>
+                <input
+                  type="text"
+                  name="registrationNo"
+                  id="regsitrationNo"
+                  placeholder="Write registration no."
+                  value={formData.registrationNo}
+                  onChange={handleChange}
+                  required
+                />
               </div>
             </div>
           </div>
@@ -75,7 +95,6 @@ const Form = () => {
           <div className="upper-form">
             <h1>PATIENT INFORMATION</h1>
             <div className="upper-form-content">
-
               <div className="upper-form-content-1">
                 <div className="form-data">
                   <label htmlFor="relationshipToPatient">
@@ -173,7 +192,6 @@ const Form = () => {
               </div>
 
               <div className="upper-form-content-1">
-
                 <div className="form-data">
                   <label htmlFor="contactPhone">
                     Contact No. <span>*</span>
@@ -209,9 +227,8 @@ const Form = () => {
 
           {/* SUBMIT */}
           <div className="submit-form">
-             <input type="submit" />
+            <input type="submit" />
           </div>
-
         </div>
       </form>
     </div>
