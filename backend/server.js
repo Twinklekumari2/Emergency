@@ -86,7 +86,7 @@ app.use('/patient', patientRoutes);
 app.use('/location', locationRoutes);
 
 // Fallback Route for non-matching API endpoints
-app.use('(.*)', (req, res) => {
+app.use((req, res) => {
     res.status(404).json({ success: false, message: "Resource Endpoint Not Found" });
 });
 
