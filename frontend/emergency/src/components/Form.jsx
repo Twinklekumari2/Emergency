@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./../styles/form.css";
 import { api } from "../api";
 
 const Form = () => {
@@ -25,17 +24,15 @@ const Form = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const token = localStorage.getItem("token"); //token -> patient form
-
-      const res = await api.post("/patient/request", formData, {
+      const token = localStorage.getItem("token");
+      await api.post("/patient/request", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      alert("Request sent successfully!");
+      alert("Emergency dispatch request broadcasted successfully!");
       setFormData({
         relationshipToPatient: "",
         registrationNo: "",
@@ -49,188 +46,139 @@ const Form = () => {
         address: "",
       });
     } catch (err) {
-      console.log(err);
-      alert("Something went wrong!");
+      console.error(err);
+      alert("Transmission protocol failed. Check system authorization.");
     }
   };
 
+  // Uniform layout system properties
+  const sectionCardStyles = "bg-[#111111] p-6 sm:p-8 rounded-sm border border-stone-900 shadow-2xl space-y-6";
+  const labelStyles = "block font-mono text-xs tracking-wider text-stone-400 uppercase font-bold mb-1.5";
+  const inputStyles = "w-full bg-[#000000] border border-stone-800 focus:border-red-600 rounded-sm p-3 text-sm text-stone-200 placeholder-stone-700 outline-none transition-all duration-200 focus:ring-1 focus:ring-red-600";
+  const titleStyles = "text-md font-bold tracking-tight text-white uppercase border-b border-stone-950 pb-3 flex items-center gap-2 font-sans";
+
   return (
-    <div className="form">
-      <form onSubmit={handleSubmit}>
-        <div className="form-form">
-          <div className="form-form-hospital">
-            <h1>Hospital Details</h1>
-            <div className="form-form-hospital-detail">
-              <div className="form-data">
-                <label htmlFor="hospitalId">
-                  Hospital Id <span>*</span>
-                </label>
-                <input
-                  type="text"
-                  name="hospitalId"
-                  id="hospitalId"
-                  placeholder="Copy and paste the hospital Id"
-                  value={formData.hospitalId}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="form-data">
-                <label htmlFor="registrationNo">
-                  RegistrationNo <span>*</span>
-                </label>
-                <input
-                  type="text"
-                  name="registrationNo"
-                  id="regsitrationNo"
-                  placeholder="Write registration no."
-                  value={formData.registrationNo}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-            </div>
-          </div>
-          {/* UPPER FORM */}
-          <div className="upper-form">
-            <h1>PATIENT INFORMATION</h1>
-            <div className="upper-form-content">
-              <div className="upper-form-content-1">
-                <div className="form-data">
-                  <label htmlFor="relationshipToPatient">
-                    Relationship to patient <span>*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="relationshipToPatient"
-                    id="relationshipToPatient"
-                    placeholder="e.g Mother, Father, Friend etc"
-                    value={formData.relationshipToPatient}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
+    <div className="min-h-screen bg-[#000000] text-stone-200 antialiased pt-[12vh] pb-24 selection:bg-red-600 selection:text-white">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* ----------- INCIDENT HEADER PROTOCOL ----------- */}
+        <header className="text-center space-y-2 mb-12">
+          <span className="inline-block font-mono text-xs tracking-widest text-red-500 font-bold uppercase border border-red-950 bg-red-950/20 px-3 py-1 rounded-sm animate-pulse">
+            CRITICAL DISPATCH INTAKE
+          </span>
+          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight uppercase">
+            Emergency Service Request
+          </h1>
+          <p className="text-sm font-mono text-stone-500 max-w-md mx-auto">
+            Input verified patient status parameters to patch a request immediately through to target facility grids.
+          </p>
+        </header>
 
-                <div className="form-data">
-                  <label htmlFor="bloodGroup">
-                    Blood Group <span>*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="bloodGroup"
-                    id="bloodGroup"
-                    placeholder="e.g AB+, A+, O- etc"
-                    value={formData.bloodGroup}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="form-data">
-                <label htmlFor="notes">
-                  Notes About the Patient <span>*</span>
+        {/* ----------- INTERACTIVE SYSTEM INPUTS ----------- */}
+        <form onSubmit={handleSubmit} className="space-y-8">
+          
+          {/* CATEGORY 1: HOSPITAL ANCHOR IDENTIFIERS */}
+          <div className={sectionCardStyles}>
+            <h2 className={titleStyles}>
+              <span className="w-1.5 h-4 bg-red-600 block rounded-sm"></span>
+              Target Facility Verification
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label htmlFor="hospitalId" className={labelStyles}>
+                  Hospital Identifier Code <span className="text-red-500">*</span>
                 </label>
-                <textarea
-                  name="notes"
-                  id="notes"
-                  placeholder="Describe the patient’s condition..."
-                  value={formData.notes}
-                  onChange={handleChange}
-                  required
-                ></textarea>
+                <input type="text" name="hospitalId" id="hospitalId" placeholder="Paste target system node ID string" value={formData.hospitalId} onChange={handleChange} className={inputStyles} required />
+              </div>
+              <div>
+                <label htmlFor="registrationNo" className={labelStyles}>
+                  Patient Admission/Reg No <span className="text-red-500">*</span>
+                </label>
+                <input type="text" name="registrationNo" id="registrationNo" placeholder="Enter registration identifier" value={formData.registrationNo} onChange={handleChange} className={inputStyles} required />
               </div>
             </div>
           </div>
 
-          {/* LOWER FORM */}
-          <div className="lower-form">
-            <h1>CONTACT INFORMATION</h1>
-
-            <div className="lower-form-content">
-              <div className="form-data">
-                <label htmlFor="contactName">
-                  Contact Name <span>*</span>
+          {/* CATEGORY 2: MEDICAL METRICS */}
+          <div className={sectionCardStyles}>
+            <h2 className={titleStyles}>
+              <span className="w-1.5 h-4 bg-red-600 block rounded-sm"></span>
+              Patient Condition Details
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label htmlFor="relationshipToPatient" className={labelStyles}>
+                  Your Relation to Patient <span className="text-red-500">*</span>
                 </label>
-                <input
-                  type="text"
-                  name="contactName"
-                  id="contactName"
-                  placeholder="e.g Twinkle Kumari"
-                  value={formData.contactName}
-                  onChange={handleChange}
-                  required
-                />
+                <input type="text" name="relationshipToPatient" id="relationshipToPatient" placeholder="e.g. Spouse, Parent, Bystander" value={formData.relationshipToPatient} onChange={handleChange} className={inputStyles} required />
               </div>
-              <div className="form-data">
-                <label htmlFor="location">
-                  Location <span>*</span>
+              <div>
+                <label htmlFor="bloodGroup" className={labelStyles}>
+                  Verified Blood Group <span className="text-red-500">*</span>
                 </label>
-                <input
-                  type="text"
-                  name="location"
-                  id="location"
-                  placeholder="78 23"
-                  value={formData.location}
-                  onChange={handleChange}
-                  required
-                />
+                <input type="text" name="bloodGroup" id="bloodGroup" placeholder="e.g. O-, AB+, A+" value={formData.bloodGroup} onChange={handleChange} className={inputStyles} required />
               </div>
-              <div className="form-data">
-                <label htmlFor="address">
-                  Address <span>*</span>
+              <div className="sm:col-span-2">
+                <label htmlFor="notes" className={labelStyles}>
+                  Triage / Diagnostic Notes <span className="text-red-500">*</span>
                 </label>
-                <input
-                  type="text"
-                  name="address"
-                  id="address"
-                  placeholder="e.g ABC Colony"
-                  value={formData.address}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              <div className="upper-form-content-1">
-                <div className="form-data">
-                  <label htmlFor="contactPhone">
-                    Contact No. <span>*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="contactPhone"
-                    id="contactPhone"
-                    placeholder="e.g +91 9045X XXXX7"
-                    value={formData.contactPhone}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <div className="form-data">
-                  <label htmlFor="contactEmail">
-                    Contact Email <span>*</span>
-                  </label>
-                  <input
-                    type="email"
-                    name="contactEmail"
-                    id="contactEmail"
-                    placeholder="e.g twinkle246@example.com"
-                    value={formData.contactEmail}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
+                <textarea name="notes" id="notes" placeholder="Specify present conditions, injuries, conscious status, or vital details clearly..." value={formData.notes} onChange={handleChange} className={`${inputStyles} min-h-[110px] resize-none`} required></textarea>
               </div>
             </div>
           </div>
 
-          {/* SUBMIT */}
-          <div className="submit-form">
-            <input type="submit" />
+          {/* CATEGORY 3: RECEPTIONIST COMMS SUITE */}
+          <div className={sectionCardStyles}>
+            <h2 className={titleStyles}>
+              <span className="w-1.5 h-4 bg-red-600 block rounded-sm"></span>
+              Contact & Geolocation Protocols
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div className="sm:col-span-2">
+                <label htmlFor="contactName" className={labelStyles}>
+                  Primary Reporter Name <span className="text-red-500">*</span>
+                </label>
+                <input type="text" name="contactName" id="contactName" placeholder="Enter full communication name" value={formData.contactName} onChange={handleChange} className={inputStyles} required />
+              </div>
+              <div>
+                <label htmlFor="location" className={labelStyles}>
+                  Coordinates (Lat/Long) <span className="text-red-500">*</span>
+                </label>
+                <input type="text" name="location" id="location" placeholder="e.g. 28.984, 77.706" value={formData.location} onChange={handleChange} className={inputStyles} required />
+              </div>
+              <div>
+                <label htmlFor="address" className={labelStyles}>
+                  Physical Landmark Address <span className="text-red-500">*</span>
+                </label>
+                <input type="text" name="address" id="address" placeholder="e.g. Sector 4, Near Metro Pillar 12" value={formData.address} onChange={handleChange} className={inputStyles} required />
+              </div>
+              <div>
+                <label htmlFor="contactPhone" className={labelStyles}>
+                  Active Callback Number <span className="text-red-500">*</span>
+                </label>
+                <input type="tel" name="contactPhone" id="contactPhone" placeholder="e.g. +91 98765 XXXXX" value={formData.contactPhone} onChange={handleChange} className={inputStyles} required />
+              </div>
+              <div>
+                <label htmlFor="contactEmail" className={labelStyles}>
+                  Secure Updates Email <span className="text-red-500">*</span>
+                </label>
+                <input type="email" name="contactEmail" id="contactEmail" placeholder="reporter@network.com" value={formData.contactEmail} onChange={handleChange} className={inputStyles} required />
+              </div>
+            </div>
           </div>
-        </div>
-      </form>
+
+          {/* ----------- SYSTEM BROADCAST COMMIT COMMAND ----------- */}
+          <div className="pt-4 flex justify-center">
+            <button
+              type="submit"
+              className="w-full sm:w-auto px-12 py-4 font-mono font-black text-xs tracking-widest uppercase text-white bg-gradient-to-r from-red-700 to-red-600 hover:from-red-600 hover:to-red-500 rounded-sm shadow-xl shadow-red-950/40 transform active:scale-[0.99] transition-all duration-200"
+            >
+              Broadcast Emergency Request
+            </button>
+          </div>
+
+        </form>
+      </div>
     </div>
   );
 };

@@ -1,53 +1,30 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
-    name:{
-        type:String,
-        required:true,
-    },
-    email:{
-        type:String,
-        required:true,
-        unique:true,
-    },
-    password:{
-        type:String,
-        required:true,
-    },
-    role:{
-        type:String,
-        enum:['admin'],
-        required:true,
-    }
-})
+  deviceId: { 
+    type: String, 
+    required: true, 
+    unique: true,
+    index: true 
+  },
+  name: { 
+    type: String, 
+    default: 'Anonymous Patient' 
+  },
+  phone: { 
+    type: String, 
+    default: null 
+  },
+  role: { 
+    type: String, 
+    default: 'patient' 
+  },
+  location: {
+    type: { type: String, enum: ['Point'], default: 'Point' },
+    coordinates: { type: [Number], default: [0, 0] }
+  }
+}, { timestamps: true });
 
-userSchema.pre('save', async function(next){
-    const person = this;
-    if(!person.isModified('password')) return next();
-    try{
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(person.password, salt);
-        person.password = hashedPassword;
-        next();
+userSchema.index({ location: '2dsphere' });
 
-    }catch(err){
-        return next(err);
-    }
-})
-
-userSchema.methods.comparePassword = async function(candidatePassword){
-    try{
-        const isMatch = await bcrypt.compare(candidatePassword, this.password)
-        return isMatch;
-        
-
-    }catch(err){
-        throw err;
-
-    }
-
-}
-
-const User = mongoose.model('user', userSchema);
-module.exports = User;
+module.exports = mongoose.model('user', userSchema);

@@ -1,160 +1,119 @@
 const express = require('express');
 const router = express.Router();
 const User = require('./../models/User');
-const Rating = require('./../models/Rating')
-const {jwtAuthMiddleWare, generateToken} = require('./../jwt');
 const Hospital = require('../models/Hospital');
+const { jwtAuthMiddleWare, generateToken } = require('./../jwt');
 
-router.post('/signup', async (req,res) => {
-    try{
-        const data = req.body;
-        const newUser = new User(data); //object bana liya
-        const response = await newUser.save();
-        console.log('data saved');
+// ==========================================
+// SILENT GUEST INITIALIZATION
+// ==========================================
+router.post('/silent-init', async (req, res) => {
+  try {
+    const { deviceId } = req.body;
 
-        const payload = {
-            id: response.id
-        }
-        console.log(JSON.stringify(payload));
-        const token = generateToken(payload);
-        console.log("Token is: " , token);
-
-        res.status(200).json({response: response, token: token});
-    }catch(err){
-        console.log(err)
-        res.status(500).json({error: "internal server error"});
+    if (!deviceId) {
+      return res.status(400).json({ success: false, message: "Device ID is required" });
     }
-})
 
-router.post('/login', async (req, res) => {
-    try{
-        const {email, password} = req.body;
-        console.log("Login attempt:", email, password);
-        //finding the given username in the User Model.
-        const user = await User.findOne({email: email});
-        console.log("Login attempt:", email, password);
+    // Use .lean() to make the read operation incredibly fast
+    let user = await User.findOne({ deviceId }).lean();
 
-        if(!user || !(await user.comparePassword(password))){
-            console.log(password, user)
-           return res.status(401).json({error: 'Invalid username or password'});
-        }
-        const payload = {
-            id : user.id,
-        }
-        const token = generateToken(payload);
-        console.log("Token is: ", token);
-        res.status(200).json({token: token, message:"login successfully"});
-    }catch(err){
-        res.status(500).json({error: "internal server error"});
-
+    if (!user) {
+      // Create a plain object or regular save for new entries
+      const newUser = await User.create({ deviceId });
+      const token = generateToken({ id: newUser._id });
+      
+      return res.status(201).json({ 
+        success: true, 
+        message: "New guest user registered", 
+        token,
+        user: newUser 
+      });
     }
-})
 
-router.get('/profile',jwtAuthMiddleWare,async (req, res) => {
-    try{
-        const userData = req.user;
-        const userId = userData.id;
-        const user = await User.findById(userId);
-        if(!user){
-            return res.status(404).json({error: 'User not found'});
-        }
-        res.status(200).json({user});
+    // Generate token for returning user to satisfy auth middleware down the line
+    const token = generateToken({ id: user._id });
 
-    }catch(err){
-        res.status(500).json({error: 'Internal server Error'});
+    return res.status(200).json({ 
+      success: true, 
+      message: "Existing user verified", 
+      token,
+      user 
+    });
+  } catch (error) {
+    console.error("Error in silent-init:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
 
-    }
-})
-
-router.put('/profile/password', jwtAuthMiddleWare, async (req, res) => {
-    //extracting the id from the token.
-    try{
-        const userId = req.user;
-    const {currentPassword, newPassword} = req.body;
-
-    const user = await User.findById(userId);
-
-    if(!(await user.comparePassword(currentPassword))){
-        return res.status(500).json({error: 'Incorrect passwrod'});
-    }
-    user.password = newPassword;
-    await user.save();
-
-    res.status(200).json({message: "Password Updated"});
-    }
-    catch(err){
-        res.status(500).json({error: "internal Server Error"});
-    }
-})
-
-router.post('/rating', async (req, res) => {
-    try{
-
-        const rating = req.body;
+// ==========================================
+// ADMIN: APPROVE HOSPITAL NODE
+// ==========================================
+router.patch('/approve/:hospitalId', jwtAuthMiddleWare, async (req, res) => {
+    try {
         const userId = req.user.id;
-        const newRating = new Rating(rating);
-        newRating.userID = userId;
-        const response = await newRating.save();
         
-        console.log(response);
-    
-        res.status(200).json({message: "Successfully Rated"});
-    }catch(err){
-        console.log(err);
-        res.status(500).json({error: err})
-    }
-})
-
-router.patch('/approve/:hospitalId',jwtAuthMiddleWare, async (req, res) => {
-    try{
-
-        const userId = req.user.id;
-        const user = await User.findById(userId);
-        if(user.role !== "admin"){
-            return res.status(403).json({message:"Access Denied"});
+        // Optimize role verification check
+        const user = await User.findById(userId).select('role').lean();
+        if (!user || user.role !== "admin") {
+            return res.status(403).json({ message: "Access Denied" });
         }
+
         const { hospitalId } = req.params;
-        const hospital = await Hospital.findById(hospitalId);
-
-        if(!hospital){
-            return res.status(401).json({message: "hospital not found"});
-        }
-
-        hospital.verificationStatus = "Approved";
-        await hospital.save();
         
-        return res.json(200).json({message: "Approved successfully", response: hospital});
+        // Atomically update instead of doing a separate find, mutate, and save cycle
+        const hospital = await Hospital.findByIdAndUpdate(
+            hospitalId,
+            { $set: { verificationStatus: "Approved" } },
+            { new: true }
+        );
 
-    }catch(err){
-        console.log(err);
-        res.status(501).json({message:"internal server error"});
+        if (!hospital) {
+            return res.status(404).json({ message: "Hospital not found" });
+        }
+        
+        // FIXED: Corrected res.json(200).json chain crash
+        return res.status(200).json({ message: "Approved successfully", response: hospital });
+
+    } catch (err) {
+        console.error("Error in hospital approval:", err);
+        res.status(500).json({ message: "Internal server error" });
     }
-})
+});
 
-router.patch('/reject/:hospitalId',jwtAuthMiddleWare, async (req, res) => {
-    try{
-
+// ==========================================
+// ADMIN: REJECT HOSPITAL NODE
+// ==========================================
+router.patch('/reject/:hospitalId', jwtAuthMiddleWare, async (req, res) => {
+    try {
         const userId = req.user.id;
-        const user = await User.findById(userId);
-        if(user.role !== "admin"){
-            return res.status(403).json({message:"Access Denied"});
-        }
-        const { hospitalId } = req.params;
-        const hospital = await Hospital.findById(hospitalId);
-
-        if(!hospital){
-            return res.status(401).json({message: "hospital not found"});
-        }
-
-        hospital.verificationStatus = "Rejected";
-        await hospital.save();
         
-        return res.json(200).json({message: "Rejected successfully", response: hospital});
+        // Optimize role verification check
+        const user = await User.findById(userId).select('role').lean();
+        if (!user || user.role !== "admin") {
+            return res.status(403).json({ message: "Access Denied" });
+        }
 
-    }catch(err){
-        console.log(err);
-        res.status(501).json({message:"internal server error"});
+        const { hospitalId } = req.params;
+        
+        // Atomically update directly inside the database engine
+        const hospital = await Hospital.findByIdAndUpdate(
+            hospitalId,
+            { $set: { verificationStatus: "Rejected" } },
+            { new: true }
+        );
+
+        if (!hospital) {
+            return res.status(404).json({ message: "Hospital not found" });
+        }
+        
+        // FIXED: Corrected res.json(200).json chain crash
+        return res.status(200).json({ message: "Rejected successfully", response: hospital });
+
+    } catch (err) {
+        console.error("Error in hospital rejection:", err);
+        res.status(500).json({ message: "Internal server error" });
     }
-})
+});
 
 module.exports = router;

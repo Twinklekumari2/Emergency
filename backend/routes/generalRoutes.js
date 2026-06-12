@@ -1,81 +1,71 @@
 const express = require('express');
 const router = express.Router();
 const User = require('./../models/User');
-const Rating = require('./../models/Rating')
-const {jwtAuthMiddleWare, generateToken} = require('./../jwt');
 const Hospital = require('../models/Hospital');
+const { jwtAuthMiddleWare } = require('./../jwt');
 
-router.post('/rating',jwtAuthMiddleWare, async (req, res) => {
-    try{
+router.get('/hospital/:hospitalId', jwtAuthMiddleWare, async (req, res) => {
+    try {
+        const hospitalInfo = await Hospital.findById(req.params.hospitalId).lean();
+        if (!hospitalInfo) return res.status(404).json({ message: "Hospital not found" });
 
-        const rating = req.body;
-        const userId = req.user.id;
-        const newRating = new Rating(rating);
-        newRating.userID = userId;
-        //hospital id is sent dynamically though frontend. keep it in mind...
-        const response = await newRating.save();
-        
-        console.log(response);
-    
-        res.status(200).json({message: "Successfully Rated", response: response});
-    }catch(err){
-        console.log(err);
-        res.status(500).json({error: err})
+        res.status(200).json({ message: "Hospital Info Fetched", response: hospitalInfo });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Internal server error" });
     }
-})
+});
 
-router.get('/hospital/:hospitalId',jwtAuthMiddleWare, async (req, res) => {
-    try{
-        const hospitalId = req.params.hospitalId;
-        const hospitalInfo = await Hospital.findById(hospitalId);
-        console.log(hospitalInfo);
-
-        res.status(200).json({message:"Hospital Info Fetched", response:hospitalInfo})
-
-    }catch(err){
-        console.log(err);
-        res.status(501).json({error:err});
-    }
-})
-
+// OPTIMIZED: Native Geospatial Index query to fetch only what is needed close to coordinates
 router.get('/hospital/nearby', jwtAuthMiddleWare, async (req, res) => {
-    try{
-        const response = await Hospital.find();
-        console.log(response);
-        res.status(200).json({message:"Hospital Fetched Successfully", response: response})
+    try {
+        const lon = parseFloat(req.query.lon);
+        const lat = parseFloat(req.query.lat);
+        const maxDist = parseFloat(req.query.distance) || 15000; // Default 15km
 
-    }catch(err){
-        console.log(err);
-        res.status(500).json({error: err});
+        if (isNaN(lon) || isNaN(lat)) {
+            return res.status(400).json({ message: "Valid longitude and latitude parameters are required" });
+        }
+
+        const response = await Hospital.find({
+            verificationStatus: "Approved",
+            location: {
+                $near: {
+                    $geometry: { type: "Point", coordinates: [lon, lat] },
+                    $maxDistance: maxDist
+                }
+            }
+        }).lean();
+
+        res.status(200).json({ message: "Hospitals fetched successfully by proximity", response });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Internal server error" });
     }
-})
+});
 
-router.post('/location',jwtAuthMiddleWare, async (req, res) => {
-    try{
-
-        const {lon, lat} = req.body;
+router.post('/location', jwtAuthMiddleWare, async (req, res) => {
+    try {
+        const { lon, lat } = req.body;
         if (typeof lat !== "number" || typeof lon !== "number") {
             return res.status(400).json({ message: "Invalid coordinates" });
         }
 
-        const userId = req.user.id;
-        const user = await User.findById(userId);
+        const response = await User.findByIdAndUpdate(
+            req.user.id,
+            { location: { type: "Point", coordinates: [lon, lat] } },
+            { new: true }
+        );
 
-        if(!user){
-            return res.status(404).json({message: "User not found"});
+        if (!response) {
+            return res.status(404).json({ message: "User not found" });
         }
-
-        user.location = {lat: lat, lon: lon};
-        //hospital id is sent dynamically though frontend. keep it in mind...
-        const response = await user.save();
-        
-        console.log(response);
     
-        res.status(200).json({message: "Successfully saved location", response: response});
-    }catch(err){
-        console.log(err);
-        res.status(500).json({error: err})
+        res.status(200).json({ message: "Successfully saved location", response });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Internal server error" });
     }
-})
+});
 
 module.exports = router;
