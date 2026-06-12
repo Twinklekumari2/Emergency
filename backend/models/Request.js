@@ -1,59 +1,43 @@
 const mongoose = require('mongoose');
 
 const requestSchema = new mongoose.Schema({
-    hospitalId:{
-        type:String,
-        required:true,
-    },
-    registrationNo:{
-        type:String,
-        required:true,
-    },
-    //  1️⃣ Patient Information
-    relationshipToPatient: {
-        type: String,
-        required: true
-    },
-    bloodGroup: {
-        type: String,
-        required: true
-    },
-    notes: {
-        type: String,
-        required: true
-    },
-
-    // 2️⃣ Contact Information
-    contactName: {
-        type: String,
-        required: true
-    },
-    contactPhone: {
-        type: String,
-        required: true
-    },
-    contactEmail: {
-        type: String,
-        required: true
-    },
-
-    // 3️⃣ Extra - track which admin submitted
-    submittedBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Admin"
-    },
-
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
-    status: {
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+    index: true
+  },
+  assignedAmbulance: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Ambulance',
+    default: null
+  },
+  assignedHospital: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Hospital',
+    default: null,
+    index: true
+  },
+  location: {
+    type: { type: String, enum: ['Point'], default: 'Point' },
+    coordinates: { type: [Number], required: true } // [longitude, latitude]
+  },
+  status: {
     type: String,
-    enum: ["Pending", "accepted", "completed"],
-    default: "Pending"
-}
-})
+    enum: ['pending', 'searching', 'dispatched', 'accepted', 'completed', 'cancelled'],
+    default: 'pending',
+    index: true
+  },
+  bloodGroup: { type: String, default: null },
+  notes: { type: String, default: "" },
+  contactName: { type: String, default: null },
+  contactPhone: { type: String, default: null },
+  contactEmail: { type: String, default: null },
+  relationshipToPatient: { type: String, default: null },
+  registrationNo: { type: String, default: null, index: true },
+  hospitalId: { type: String, default: null, index: true }
+}, { timestamps: true });
 
+requestSchema.index({ location: '2dsphere' });
 
-const Request = mongoose.model('request', requestSchema);
-module.exports = Request;
+module.exports = mongoose.model('Request', requestSchema);
