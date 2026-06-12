@@ -46,7 +46,7 @@ app.use('/user', userRoutes);
 const hospitalRoutes = require('./routes/hospitalRoutes.js');
 app.use('/hospital', hospitalRoutes);
 
-const adminRoutes = require('./routes/AdminRoutes.js'); 
+const adminRoutes = require('./routes/'); 
 app.use('/admin', adminRoutes);
 
 const generalRoutes = require('./routes/generalRoutes.js');
