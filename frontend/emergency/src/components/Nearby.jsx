@@ -3,7 +3,7 @@ import getUserLocation from './../script/location.js';
 import Card from './Card.jsx';
 import { api } from '../api.js';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleNodes, faLocationCrosshairs, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faCircleNodes, faLocationCrosshairs, faSpinner, faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const Nearby = () => {
   const [toggleScreen, setToggleScreen] = useState(false);
@@ -11,6 +11,9 @@ const Nearby = () => {
   const [stateName, setStateName] = useState("");
   const [hospitals, setHospitals] = useState([]);
   const [loading, setLoading] = useState(true);
+  
+  // NEW STATE: Track search queries
+  const [searchQuery, setSearchQuery] = useState("");
 
   const getCityHospitals = async (cityName) => {
     try {
@@ -39,17 +42,15 @@ const Nearby = () => {
     const loadHospitals = async (cityName, state) => {
       setLoading(true);
 
-      // 🔥 CRITICAL OPTIMIZATION: Check if hospital data array is already cached
       const cachedHospitals = sessionStorage.getItem(`cached_hospitals_${cityName}`);
       
       if (cachedHospitals) {
-        setHospitals(JSON.parse(cachedHospitals)); // Pull array cleanly from storage
+        setHospitals(JSON.parse(cachedHospitals));
         setToggleScreen(true);
         setLoading(false);
-        return; // Network API pipeline completely bypassed!
+        return; 
       }
 
-      // Fallback: Fetch from database if cache is empty
       let data = await getCityHospitals(cityName);
       if (!data.length && state) {
         data = await getStateHospitals(state);
@@ -59,7 +60,6 @@ const Nearby = () => {
       setToggleScreen(true);
       setLoading(false);
 
-      // 🔥 CACHE RESPONSE DATA: Save array payload for upcoming instances
       if (data.length > 0) {
         sessionStorage.setItem(`cached_hospitals_${cityName}`, JSON.stringify(data));
       }
@@ -95,12 +95,27 @@ const Nearby = () => {
     fetchLocation();
   }, []);
 
+  // NEW COMPUTED PROPERTY: Filter hospitals array dynamically based on parameters
+  const filteredHospitals = hospitals.filter((hospital) => {
+    const query = searchQuery.toLowerCase().trim();
+    if (!query) return true; // If search bar is blank, show everything
+
+    // Safeguards against undefined data paths inside your schema layout
+    const nameMatch = hospital.name?.toLowerCase().includes(query);
+    const cityMatch = hospital.city?.toLowerCase().includes(query);
+    const stateMatch = hospital.state?.toLowerCase().includes(query);
+    const regMatch = hospital.registrationNumber?.toLowerCase().includes(query) || 
+                     hospital.regNo?.toLowerCase().includes(query); // Adapts to your naming scheme
+
+    return nameMatch || cityMatch || stateMatch || regMatch;
+  });
+
   return (
     <div className="min-h-screen bg-[#000000] text-stone-200 antialiased pt-[12vh] pb-24 selection:bg-red-600 selection:text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
         {/* ----------- DIRECTORY HEADER TRACKER ----------- */}
-        <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-stone-900 pb-6 mb-10 text-center md:text-left">
+        <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-stone-900 pb-6 mb-8 text-center md:text-left">
           <div className="space-y-1">
             <span className="inline-flex items-center gap-2 font-mono text-xs text-red-500 font-bold uppercase tracking-wider">
               <FontAwesomeIcon icon={faLocationCrosshairs} className="animate-pulse" /> Live Tracking Grid
@@ -118,6 +133,37 @@ const Nearby = () => {
           </div>
         </header>
 
+        {/* ----------- NEW SEARCH FILTER CONSOLE ----------- */}
+        {!loading && hospitals.length > 0 && (
+          <div className="mb-8 max-w-xl">
+            <div className="relative group">
+              <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <FontAwesomeIcon icon={faMagnifyingGlass} className="text-stone-600 group-focus-within:text-red-500 transition-colors" />
+              </span>
+              <input
+                type="text"
+                placeholder="Search by name, city, state, or reg number..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-[#0d0d0d] border border-stone-950 text-white placeholder-stone-600 text-sm rounded-sm pl-10 pr-10 py-3 font-mono tracking-wide transition-all duration-200 focus:outline-none focus:border-red-600 focus:bg-[#111111]"
+              />
+              {searchQuery && (
+                <button 
+                  onClick={() => setSearchQuery("")}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-stone-500 hover:text-white"
+                >
+                  <FontAwesomeIcon icon={faXmark} />
+                </button>
+              )}
+            </div>
+            {searchQuery && (
+              <div className="mt-2 font-mono text-[10px] text-stone-500 uppercase tracking-widest">
+                Filtered Results: <span className="text-red-500">{filteredHospitals.length}</span> / {hospitals.length} Nodes found
+              </div>
+            )}
+          </div>
+        )}
+
         {/* ----------- ACTIVE GEOLOCATION STATE LOGIC ----------- */}
         {loading ? (
           <div className="min-h-[40vh] flex flex-col items-center justify-center space-y-4 bg-[#111111] border border-stone-900 rounded-sm p-12">
@@ -126,11 +172,11 @@ const Nearby = () => {
               Querying Regional Network Nodes...
             </p>
           </div>
-        ) : toggleScreen && hospitals.length > 0 ? (
+        ) : toggleScreen && filteredHospitals.length > 0 ? (
           
           /* CRITICAL GRID RESOLUTION: Fluid cards list */
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-            {hospitals.map(h => (
+            {filteredHospitals.map(h => (
               <div key={h._id} className="flex flex-col h-full transition-transform duration-200 hover:scale-[1.01]">
                 <Card data={h} />
               </div>
@@ -142,9 +188,13 @@ const Nearby = () => {
           <div className="min-h-[40vh] flex flex-col items-center justify-center text-center space-y-4 bg-[#111111] border border-stone-900 rounded-sm p-12">
             <FontAwesomeIcon icon={faCircleNodes} className="text-stone-700 text-4xl" />
             <div className="space-y-1">
-              <h3 className="text-md font-bold uppercase tracking-tight text-white">No Active Nodes Located</h3>
+              <h3 className="text-md font-bold uppercase tracking-tight text-white">
+                {searchQuery ? "No Filtering Matches" : "No Active Nodes Located"}
+              </h3>
               <p className="font-mono text-xs text-stone-500 max-w-sm">
-                No hospitals in "{city || stateName}" have connected to the instant response portal yet.
+                {searchQuery 
+                  ? `Your search filter criteria "${searchQuery}" didn't map to any cached hospital data targets.`
+                  : `No hospitals in "${city || stateName}" have connected to the instant response portal yet.`}
               </p>
             </div>
           </div>
